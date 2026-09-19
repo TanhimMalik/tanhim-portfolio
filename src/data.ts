@@ -51,7 +51,7 @@ export const projects = [
       'Managed app-wide and local state (auth, theme) with React Hooks.',
     ],
     tags: ['React', 'Vite', 'Tailwind CSS'],
-    link: 'https://github.com/TanhimMalik',
+    link: 'https://store-admin-dashboard-eight.vercel.app',
   },
 ]
 
