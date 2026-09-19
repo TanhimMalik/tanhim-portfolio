@@ -23,7 +23,7 @@ export function Panel({ id, index, label, theme, shapes = [], gravityIntro, chil
       className="panel relative flex h-screen w-screen shrink-0 flex-col justify-center overflow-hidden px-8 pb-10 pt-28 transition-colors duration-500 md:px-24 md:pt-32"
       style={{ backgroundColor: theme.bg, color: theme.fg }}
     >
-      <div className="pointer-events-none absolute inset-0 z-0">
+      <div className="pointer-events-none absolute inset-0 z-0 hidden md:block">
         {shapes.map((s) => (
           <div key={s.id} ref={setShapeRef(s.id)} className="absolute left-0 top-0 will-change-transform">
             <ShapeVisual kind={s.kind} size={s.size} color={s.color} opacity={s.opacity} />

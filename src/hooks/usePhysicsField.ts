@@ -6,6 +6,7 @@ export type PhysicsShapeConfig = {
   size: number
 }
 
+const MOBILE_BREAKPOINT = 768
 const WALL_THICKNESS = 120
 const AVOID_MARGIN = 40
 const REPEL_RADIUS = 140
@@ -23,6 +24,7 @@ export function usePhysicsField(shapes: PhysicsShapeConfig[], options?: { gravit
   useEffect(() => {
     const container = containerRef.current
     if (!container || shapes.length === 0) return
+    if (window.innerWidth < MOBILE_BREAKPOINT) return
 
     const { Engine, World, Bodies, Body, Runner, Events } = Matter
     const width = container.clientWidth
