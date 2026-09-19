@@ -1,6 +1,6 @@
 # Tanhim Malik — Portfolio
 
-Personal portfolio site, live at **[tanhim-portfolio.vercel.app](https://tanhim-portfolio.vercel.app)**.
+Personal portfolio site, live at **[tanhimmalik.vercel.app](https://tanhimmalik.vercel.app)**.
 
 A horizontally-scrolling, single-page portfolio: each section (Intro, About, Experience, Projects, Skills, Contact) is its own full-screen panel, navigated by scrolling vertically. Scroll input is free and continuous while you're actively scrolling, then eases to the nearest section once it settles — no hard snapping mid-motion.
 
