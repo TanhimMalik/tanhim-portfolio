@@ -1,32 +1,33 @@
-# React + TypeScript + Vite
+# Tanhim Malik — Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Personal portfolio site, live at **[tanhim-portfolio.vercel.app](https://tanhim-portfolio.vercel.app)**.
 
-Currently, two official plugins are available:
+A horizontally-scrolling, single-page portfolio: each section (Intro, About, Experience, Projects, Skills, Contact) is its own full-screen panel, navigated by scrolling vertically. Scroll input is free and continuous while you're actively scrolling, then eases to the nearest section once it settles — no hard snapping mid-motion.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- **Horizontal scroll navigation** — vertical wheel/trackpad input drives horizontal panel movement, with a hover-expandable nav that shows section names and updates live as you scroll
+- **Physics-driven decoration** — each section has bouncing shapes (Matter.js) that collide with each other, avoid the text content, and get pushed away by the cursor; the intro section has a one-time gravity "drop-in" animation on load
+- **Scroll-triggered content reveals** — text and list items animate in as their section becomes active
+- Responsive: falls back to natural vertical scrolling and stacked sections on mobile
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech stack
 
-## Expanding the Oxlint configuration
+- [React](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
+- [Vite](https://vite.dev/) for build tooling
+- [Tailwind CSS v4](https://tailwindcss.com/) for styling
+- [GSAP](https://gsap.com/) for the intro text animation and scroll easing
+- [Matter.js](https://brm.io/matter-js/) for the physics decorations
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+## Running locally
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Build for production:
+
+```bash
+npm run build
+```
