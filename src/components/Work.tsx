@@ -19,7 +19,7 @@ export function Work() {
 function Featured() {
   return (
     <Reveal className="mt-14">
-      <article id="soldra" className="relative isolate overflow-hidden rounded-[2rem] bg-night text-night-ink">
+      <article id="soldra" className="relative isolate overflow-clip rounded-[2rem] bg-night text-night-ink">
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute -top-48 -left-32 size-[38rem] rounded-full bg-[#6fa0c4] opacity-20 blur-[140px]" />
           <div className="absolute top-1/4 -right-40 size-[32rem] rounded-full bg-[#f0925c] opacity-15 blur-[140px]" />
@@ -81,8 +81,8 @@ function MoreProjects() {
   return (
     <div className="mt-6 grid gap-6 lg:grid-cols-3">
       <Reveal className="lg:col-span-2">
-        <article className="group flex h-full flex-col overflow-hidden rounded-[2rem] border border-line bg-surface">
-          <div className="overflow-hidden border-b border-line bg-sunken px-5 pt-5 sm:px-8 sm:pt-8">
+        <article className="group flex h-full flex-col overflow-clip rounded-[2rem] border border-line bg-surface">
+          <div className="overflow-clip border-b border-line bg-sunken px-5 pt-5 sm:px-8 sm:pt-8">
             <img
               src={project.screenshot}
               width={1600}
@@ -141,7 +141,7 @@ function MoreProjects() {
             href={profile.github}
             target="_blank"
             rel="noreferrer"
-            className="group relative flex h-full min-h-56 flex-col justify-between overflow-hidden rounded-[2rem] bg-accent p-6 text-ink transition hover:brightness-105 sm:p-8"
+            className="group relative flex h-full min-h-56 flex-col justify-between overflow-clip rounded-[2rem] bg-accent p-6 text-ink transition hover:brightness-105 sm:p-8"
           >
             <GithubLogo weight="fill" className="size-9" aria-hidden />
             <ArrowUpRight
