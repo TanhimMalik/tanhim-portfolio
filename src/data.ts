@@ -1,78 +1,186 @@
+import soldraShot from './assets/projects/soldra-dashboard.webp'
+import storeAdminShot from './assets/projects/store-admin.webp'
+import typescript from './assets/logos/typescript.svg'
+import javascript from './assets/logos/javascript.svg'
+import java from './assets/logos/java.svg'
+import python from './assets/logos/python.svg'
+import html5 from './assets/logos/html5.svg'
+import css3 from './assets/logos/css3.svg'
+import rLang from './assets/logos/r.svg'
+import react from './assets/logos/react.svg'
+import nextjs from './assets/logos/nextjs.svg'
+import tailwind from './assets/logos/tailwindcss.svg'
+import nodejs from './assets/logos/nodejs.svg'
+import spring from './assets/logos/spring.svg'
+import flask from './assets/logos/flask.svg'
+import kafka from './assets/logos/apachekafka.svg'
+import postgres from './assets/logos/postgresql.svg'
+import supabase from './assets/logos/supabase.svg'
+import firebase from './assets/logos/firebase.svg'
+import aws from './assets/logos/amazonwebservices.svg'
+import docker from './assets/logos/docker.svg'
+import git from './assets/logos/git.svg'
+import prometheus from './assets/logos/prometheus.svg'
+import grafana from './assets/logos/grafana.svg'
+
 export const profile = {
   name: 'Tanhim Malik',
+  firstName: 'Tanhim',
   role: 'Software Engineer',
-  tagline: 'I build developer tools, cloud infrastructure, and web apps that get out of the way.',
   email: 'tanhimmalik321@gmail.com',
   linkedin: 'https://www.linkedin.com/in/tanhimmalik/',
   github: 'https://github.com/TanhimMalik',
+  resume: '/Tanhim-Malik-Resume.pdf',
 }
 
-export const skills = {
-  'Languages & Frameworks': ['JavaScript', 'TypeScript', 'Java', 'Python', 'SQL', 'HTML/CSS', 'R', 'React', 'Node.js', 'Flask', 'SpringBoot'],
-  'Developer Tools': ['AWS (S3, EC2, Lambda, CDK, Redshift)', 'Git', 'Docker', 'Prometheus', 'Grafana'],
+export const impact = [
+  {
+    value: '85%',
+    qualifier: 'over',
+    label: 'less time spent on analysis after I automated the data-pull tasks',
+    where: 'Jefferies',
+  },
+  {
+    value: '60%',
+    label: 'faster incident detection after I launched an internal monitoring platform',
+    where: 'Jefferies',
+  },
+  {
+    value: '40%',
+    qualifier: 'up to',
+    label: 'faster queries after helping migrate kdb+ databases to AWS',
+    where: 'Jefferies',
+  },
+  {
+    value: '100%',
+    label: 'of products with a team owner after I automated system cataloging',
+    where: 'Tripadvisor',
+  },
+]
+
+export const soldra = {
+  name: 'Soldra',
+  tagline: 'Profit and tax tracking for online resellers.',
+  status: 'Beta coming soon',
+  problem:
+    'Resellers know what they sold, not what they kept. Payouts look like income until the fees, shipping and cost of the item come off, and the self-employment tax bill shows up in April.',
+  solution:
+    "Soldra imports sales from six marketplaces, takes off every fee and what you paid for the item, and shows the profit that's actually yours, plus what to set aside each tax quarter.",
+  screenshot: soldraShot,
+  details: [
+    {
+      title: 'One importer, six CSV formats',
+      body: "eBay, Poshmark, Mercari, Whatnot, Depop and Etsy all export differently. Rows that can't be parsed get skipped instead of failing the file, and overlapping exports never double count.",
+    },
+    {
+      title: 'Fees modeled per platform',
+      body: "eBay's final value fee plus the per-order charge, Poshmark's 20% (or $2.95 under $15), Mercari's 10%. When an export reports the real fee, that number wins.",
+    },
+    {
+      title: 'Tax math you can act on',
+      body: 'Self-employment tax is 15.3% of 92.35% of net profit, split across the real IRS quarterly deadlines.',
+    },
+    {
+      title: 'Tested where it counts',
+      body: 'Every marketplace parser, the fee math and the tax math have their own test suites.',
+    },
+  ],
+  stack: ['Next.js', 'TypeScript', 'Supabase', 'Postgres', 'Drizzle', 'Stripe', 'Tailwind CSS', 'Vitest'],
+}
+
+export const projects = [
+  {
+    name: 'Store Admin Dashboard',
+    description:
+      'An admin dashboard for an online store: product management backed by Firestore, sign-in-gated editing, an orders table, and sales charts.',
+    screenshot: storeAdminShot,
+    stack: ['React', 'Vite', 'Tailwind CSS', 'Firebase', 'Recharts', 'Framer Motion'],
+    live: 'https://store-admin-dashboard-eight.vercel.app',
+    source: 'https://github.com/TanhimMalik/Store-Admin-Dashboard',
+  },
+]
+
+export const thisSite = {
+  name: 'This site',
+  description: 'Built with React, Vite and Tailwind CSS, and deployed on Vercel.',
+  source: 'https://github.com/TanhimMalik/tanhim-portfolio',
 }
 
 export const experience = [
   {
-    role: 'Apprentice Software Engineer',
     company: 'Tripadvisor',
-    location: 'New York, NY',
+    role: 'Apprentice Software Engineer',
     period: 'Mar 2024 – Oct 2024',
-    points: [
-      'Developed a developer-facing web application deployed as a plugin to Cortex for streamlining common developer operations like new service creation, Snowflake database creation, etc.',
-      'Enhanced cloud infrastructure and developer tooling across TripAdvisor using Cortex, focusing on automation and efficiency.',
-      'Used TypeScript and React to build scalable, maintainable Cortex plugins and templates, boosting developer productivity.',
-      'Managed cloud infrastructure deployments with AWS CDK, ensuring scalability and robust performance.',
-      'Automated system cataloging and owner identification, leading to 100% team ownership of products.',
-    ],
-  },
-  {
-    role: 'Software Engineer Intern',
-    company: 'Jefferies Group',
     location: 'New York, NY',
-    period: 'Feb 2023 – Aug 2023',
     points: [
-      'Developed and supported Java applications for the ION Trading Platform, integrating custom APIs for trader functionality.',
-      'Built a risk aggregation app for mortgage trading desks used by the COO, CFO, and dozens of traders, using Java Spring Boot and Kafka.',
-      'Automated data-pull tasks, achieving an over 85% reduction in time required for analysis.',
-      'Launched an internal logging, alerting, and observability platform using Python, Grafana, and Prometheus — 7 new dashboards, 60% faster incident detection.',
-      'Assisted in migrating kdb+ databases to AWS, cutting on-premise costs and improving query performance up to 40%.',
+      'Built a developer-facing web app, shipped as a Cortex plugin, that streamlines common ops like creating a new service or a Snowflake database.',
+      'Automated system cataloging and owner identification, leading to 100% team ownership of products.',
+      'Built Cortex plugins and templates in TypeScript and React, and managed infrastructure deployments with AWS CDK.',
     ],
+    stack: ['TypeScript', 'React', 'AWS CDK', 'Cortex'],
   },
-]
-
-export const projects = [
   {
-    name: 'React Ecommerce Store Admin',
-    description: 'A responsive, multi-page admin dashboard mimicking the management of an e-commerce store’s operations.',
+    company: 'Jefferies',
+    role: 'Software Engineer Intern',
+    period: 'Feb 2023 – Aug 2023',
+    location: 'New York, NY',
     points: [
-      'Built a complete frontend with React, Vite, and Tailwind CSS around a clean, component-based architecture.',
-      'Implemented CRUD functionality for products and a dynamic data table for tracking orders.',
-      'Managed app-wide and local state (auth, theme) with React Hooks.',
+      'Built a risk aggregation app for the mortgage trading desks, used by the COO, CFO and dozens of traders, with Java Spring Boot and Kafka.',
+      'Launched an internal logging, alerting and observability platform: 7 new dashboards and 60% faster incident detection.',
+      'Automated data-pull tasks for an over 85% cut in analysis time, and helped migrate kdb+ databases to AWS for up to 40% faster queries.',
     ],
-    tags: ['React', 'Vite', 'Tailwind CSS'],
-    link: 'https://store-admin-dashboard-eight.vercel.app',
+    stack: ['Java', 'Spring Boot', 'Kafka', 'Python', 'Grafana', 'Prometheus', 'AWS'],
   },
 ]
 
 export const education = [
-  { school: 'Western Governors University', degree: 'B.S. in Computer Science', period: 'May 2027' },
-  { school: 'Year Up NY', degree: 'Technical Diploma in Software Development', period: 'Aug 2023' },
+  { school: 'Western Governors University', credential: 'B.S. Computer Science', period: 'Expected May 2027' },
+  { school: 'Year Up NY', credential: 'Technical Diploma, Software Development', period: 'Aug 2023' },
 ]
 
-export type PanelTheme = {
-  bg: string
-  fg: string
-  accent: string
-  soft: string
-}
+export type StackItem = { name: string; logo: string; note?: string }
 
-export const panelThemes: PanelTheme[] = [
-  { bg: '#FF5A2E', fg: '#FFFFFF', accent: '#0B0B0D', soft: 'rgba(255,255,255,0.15)' },
-  { bg: '#7C3AED', fg: '#FFFFFF', accent: '#0B0B0D', soft: 'rgba(255,255,255,0.18)' },
-  { bg: '#1D4ED8', fg: '#FFFFFF', accent: '#FFC53D', soft: 'rgba(255,255,255,0.15)' },
-  { bg: '#FFC53D', fg: '#101010', accent: '#0B0B0D', soft: 'rgba(16,16,16,0.1)' },
-  { bg: '#F3F1EA', fg: '#101010', accent: '#FF5A2E', soft: 'rgba(16,16,16,0.08)' },
-  { bg: '#FF5FA2', fg: '#101010', accent: '#0B0B0D', soft: 'rgba(16,16,16,0.1)' },
-  { bg: '#0B0B0D', fg: '#F3F1EA', accent: '#C8FF4D', soft: 'rgba(255,255,255,0.1)' },
+export const stack: { group: string; items: StackItem[] }[] = [
+  {
+    group: 'Languages',
+    items: [
+      { name: 'TypeScript', logo: typescript },
+      { name: 'JavaScript', logo: javascript },
+      { name: 'Java', logo: java },
+      { name: 'Python', logo: python },
+      { name: 'HTML', logo: html5 },
+      { name: 'CSS', logo: css3 },
+      { name: 'R', logo: rLang },
+    ],
+  },
+  {
+    group: 'Frontend',
+    items: [
+      { name: 'React', logo: react },
+      { name: 'Next.js', logo: nextjs },
+      { name: 'Tailwind CSS', logo: tailwind },
+    ],
+  },
+  {
+    group: 'Backend & data',
+    items: [
+      { name: 'Node.js', logo: nodejs },
+      { name: 'Spring Boot', logo: spring },
+      { name: 'Flask', logo: flask },
+      { name: 'Kafka', logo: kafka },
+      { name: 'PostgreSQL', logo: postgres },
+      { name: 'Supabase', logo: supabase },
+      { name: 'Firebase', logo: firebase },
+    ],
+  },
+  {
+    group: 'Cloud & tools',
+    items: [
+      { name: 'AWS', logo: aws, note: 'S3, EC2, Lambda, CDK, Redshift' },
+      { name: 'Docker', logo: docker },
+      { name: 'Git', logo: git },
+      { name: 'Prometheus', logo: prometheus },
+      { name: 'Grafana', logo: grafana },
+    ],
+  },
 ]

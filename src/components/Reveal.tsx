@@ -1,15 +1,34 @@
-import type { CSSProperties, PropsWithChildren } from 'react'
+import { useEffect, useRef, useState, type CSSProperties, type PropsWithChildren } from 'react'
 
 type RevealProps = PropsWithChildren<{
-  active: boolean
   delay?: number
   className?: string
 }>
 
-export function Reveal({ active, delay = 0, className = '', children }: RevealProps) {
+export function Reveal({ delay = 0, className = '', children }: RevealProps) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: '0px 0px -8% 0px' },
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <div
-      className={`reveal ${active ? 'is-active' : ''} ${className}`}
+      ref={ref}
+      className={`reveal ${visible ? 'is-visible' : ''} ${className}`}
       style={{ '--reveal-delay': `${delay}ms` } as CSSProperties}
     >
       {children}

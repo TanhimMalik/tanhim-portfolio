@@ -1,110 +1,110 @@
+import { useEffect, useState } from 'react'
+import { DownloadSimple, List, X } from '@phosphor-icons/react'
 import { profile } from '../data'
-import type { PanelTheme } from '../data'
 
-type NavItem = {
-  label: string
-  index: number
-  subItems?: { label: string; index: number }[]
-}
-
-const NAV_ITEMS: NavItem[] = [
-  { label: 'Intro', index: 0 },
-  { label: 'About', index: 1 },
-  {
-    label: 'Experience',
-    index: 2,
-    subItems: [
-      { label: 'Tripadvisor', index: 2 },
-      { label: 'Jefferies', index: 3 },
-    ],
-  },
-  { label: 'Projects', index: 4 },
-  { label: 'Skills', index: 5 },
-  { label: 'Contact', index: 6 },
+const LINKS = [
+  { href: '#work', label: 'Work' },
+  { href: '#experience', label: 'Experience' },
+  { href: '#stack', label: 'Stack' },
+  { href: '#contact', label: 'Contact' },
 ]
 
-const SECTION_NAMES = ['Intro', 'About', 'Tripadvisor', 'Jefferies', 'Projects', 'Skills', 'Contact']
+export function Nav() {
+  const [active, setActive] = useState('')
+  const [open, setOpen] = useState(false)
 
-export function Nav({
-  activeIndex,
-  onNavigate,
-  theme,
-  isScrolling,
-}: {
-  activeIndex: number
-  onNavigate: (index: number) => void
-  theme: PanelTheme
-  isScrolling: boolean
-}) {
+  useEffect(() => {
+    const targets = ['#top', ...LINKS.map((link) => link.href)]
+      .map((href) => document.querySelector(href))
+      .filter((el): el is Element => el !== null)
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActive(entry.target.id === 'top' ? '' : `#${entry.target.id}`)
+        }
+      },
+      { rootMargin: '-45% 0px -50% 0px' },
+    )
+    targets.forEach((target) => observer.observe(target))
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (!open) return
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false)
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [open])
+
   return (
-    <header className="pointer-events-none fixed inset-x-0 top-0 z-50 flex items-center justify-between px-6 py-6 md:px-10">
-      <button
-        onClick={() => onNavigate(0)}
-        className="pointer-events-auto rounded-full px-4 py-2 font-mono text-sm font-medium tracking-tight backdrop-blur-sm transition-colors duration-500"
-        style={{ backgroundColor: theme.soft, color: theme.fg }}
-      >
-        {profile.name}
-      </button>
+    <header className="fixed inset-x-0 top-3 z-50 px-3 sm:top-4">
       <nav
-        className="group/all pointer-events-auto hidden items-center gap-1 rounded-full px-3 py-2 backdrop-blur-sm transition-colors duration-500 md:flex"
-        style={{ backgroundColor: theme.soft }}
+        aria-label="Main"
+        className="mx-auto flex max-w-3xl items-center justify-between gap-2 rounded-full border border-line/80 bg-surface/75 p-1.5 pl-5 shadow-[0_12px_32px_-14px_rgba(22,20,15,0.22)] backdrop-blur-md"
       >
-        {NAV_ITEMS.map((item) => {
-          const isActive = item.subItems
-            ? item.subItems.some((s) => s.index === activeIndex)
-            : item.index === activeIndex
-          const liveLabel = isActive ? SECTION_NAMES[activeIndex] : item.label
+        <a href="#top" className="font-display text-[15px] font-bold tracking-tight">
+          {profile.name}
+        </a>
 
-          return (
-            <div key={item.label} className="group/item relative">
-              <button
-                onClick={() => onNavigate(item.index)}
-                className="flex items-center px-2 py-1"
-                aria-label={`Go to ${item.label}`}
+        <ul className="hidden items-center gap-1 md:flex">
+          {LINKS.map((link) => (
+            <li key={link.href}>
+              <a
+                href={link.href}
+                aria-current={active === link.href ? 'location' : undefined}
+                className={`rounded-full px-3.5 py-2 text-sm font-medium transition-colors ${
+                  active === link.href ? 'bg-sunken text-ink' : 'text-muted hover:text-ink'
+                }`}
               >
-                <span
-                  className="h-1.5 shrink-0 rounded-full transition-all duration-300"
-                  style={{
-                    width: isActive ? '1.4rem' : '0.375rem',
-                    backgroundColor: isActive ? theme.accent : theme.fg,
-                    opacity: isActive ? 1 : 0.35,
-                  }}
-                />
-                <span
-                  className="max-w-0 overflow-hidden whitespace-nowrap font-mono text-xs opacity-0 transition-all duration-300 group-hover/all:max-w-[120px] group-hover/all:pl-2 group-hover/all:opacity-100"
-                  style={{
-                    color: isActive ? theme.accent : theme.fg,
-                    maxWidth: isScrolling && isActive ? '120px' : undefined,
-                    paddingLeft: isScrolling && isActive ? '0.5rem' : undefined,
-                    opacity: isScrolling && isActive ? 1 : undefined,
-                  }}
-                >
-                  {isScrolling && isActive ? liveLabel : item.label}
-                </span>
-              </button>
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
 
-              {item.subItems && (
-                <div className="pointer-events-none absolute left-1/2 top-full -translate-x-1/2 pt-2 opacity-0 transition-all duration-200 group-hover/item:pointer-events-auto group-hover/item:opacity-100">
-                  <div className="rounded-2xl p-1.5 backdrop-blur-sm" style={{ backgroundColor: theme.soft }}>
-                    <div className="flex flex-col gap-0.5">
-                      {item.subItems.map((sub) => (
-                        <button
-                          key={sub.label}
-                          onClick={() => onNavigate(sub.index)}
-                          className="whitespace-nowrap rounded-xl px-3 py-1.5 text-left font-mono text-xs transition-colors"
-                          style={{ color: sub.index === activeIndex ? theme.accent : theme.fg }}
-                        >
-                          {sub.label}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          )
-        })}
+        <div className="flex items-center gap-1">
+          <a
+            href={profile.resume}
+            download
+            className="inline-flex min-h-10 items-center gap-2 rounded-full bg-ink px-4 text-sm font-semibold text-canvas transition hover:bg-ink-soft"
+          >
+            Resume
+            <DownloadSimple weight="bold" className="size-4" aria-hidden />
+          </a>
+          <button
+            type="button"
+            onClick={() => setOpen((o) => !o)}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            className="grid size-10 cursor-pointer place-items-center rounded-full text-ink transition hover:bg-sunken md:hidden"
+          >
+            {open ? <X className="size-5" aria-hidden /> : <List className="size-5" aria-hidden />}
+          </button>
+        </div>
       </nav>
+
+      <div
+        id="mobile-menu"
+        hidden={!open}
+        className="mx-auto mt-2 max-w-3xl rounded-3xl border border-line bg-surface p-2 shadow-xl md:hidden"
+      >
+        <ul>
+          {LINKS.map((link) => (
+            <li key={link.href}>
+              <a
+                href={link.href}
+                onClick={() => setOpen(false)}
+                className="block rounded-2xl px-4 py-3 text-base font-medium text-ink transition-colors hover:bg-sunken"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
     </header>
   )
 }
