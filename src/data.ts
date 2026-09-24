@@ -1,4 +1,5 @@
 import soldraShot from './assets/projects/soldra-dashboard.webp'
+import soldraMark from './assets/projects/soldra-mark.svg'
 import storeAdminShot from './assets/projects/store-admin.webp'
 import typescript from './assets/logos/typescript.svg'
 import javascript from './assets/logos/javascript.svg'
@@ -67,6 +68,7 @@ export const soldra = {
   solution:
     "Soldra imports sales from six marketplaces, takes off every fee and what you paid for the item, and shows the profit that's actually yours, plus what to set aside each tax quarter.",
   screenshot: soldraShot,
+  logo: soldraMark,
   details: [
     {
       title: 'One importer, six CSV formats',
