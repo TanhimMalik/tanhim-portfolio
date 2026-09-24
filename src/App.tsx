@@ -3,6 +3,7 @@ import { Hero } from './components/Hero'
 import { Impact } from './components/Impact'
 import { Work } from './components/Work'
 import { Experience } from './components/Experience'
+import { Stack } from './components/Stack'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Impact />
         <Work />
         <Experience />
+        <Stack />
       </main>
     </>
   )
