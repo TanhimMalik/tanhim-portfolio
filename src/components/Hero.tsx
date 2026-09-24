@@ -29,7 +29,8 @@ export function Hero() {
 
         <Reveal delay={80}>
           <h1 className="mt-8 max-w-5xl text-[clamp(2.75rem,7vw,5.75rem)] leading-[0.95] font-bold tracking-[-0.045em]">
-            Hi, I'm {profile.firstName}. <span className="text-faint">I build software that gets out of the way.</span>
+            Hi, I'm {profile.firstName}.{' '}
+            <span className="block text-faint">I build software that gets out of the way.</span>
           </h1>
         </Reveal>
 
