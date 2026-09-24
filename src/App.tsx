@@ -2,6 +2,7 @@ import { Nav } from './components/Nav'
 import { Hero } from './components/Hero'
 import { Impact } from './components/Impact'
 import { Work } from './components/Work'
+import { Experience } from './components/Experience'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Hero />
         <Impact />
         <Work />
+        <Experience />
       </main>
     </>
   )
