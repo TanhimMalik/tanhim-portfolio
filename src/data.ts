@@ -7,7 +7,6 @@ import java from './assets/logos/java.svg'
 import python from './assets/logos/python.svg'
 import html5 from './assets/logos/html5.svg'
 import css3 from './assets/logos/css3.svg'
-import rLang from './assets/logos/r.svg'
 import react from './assets/logos/react.svg'
 import nextjs from './assets/logos/nextjs.svg'
 import tailwind from './assets/logos/tailwindcss.svg'
@@ -38,12 +37,12 @@ export const impact = [
   {
     value: '85%',
     qualifier: 'over',
-    label: 'less time spent on analysis after I automated the data-pull tasks',
+    label: 'less analysis time after I automated kdb+ data extraction and analysis',
     where: 'Jefferies',
   },
   {
     value: '60%',
-    label: 'faster incident detection after I launched an internal monitoring platform',
+    label: 'less time to detect incidents after I built an internal observability platform',
     where: 'Jefferies',
   },
   {
@@ -54,7 +53,7 @@ export const impact = [
   },
   {
     value: '100%',
-    label: 'of products with a team owner after I automated system cataloging',
+    label: 'documented ownership across cataloged products, which I helped reach by automating catalog submissions',
     where: 'Tripadvisor',
   },
 ]
@@ -92,7 +91,7 @@ export const soldra = {
 
 export const projects = [
   {
-    name: 'Store Admin Dashboard',
+    name: 'E-Commerce Admin Dashboard',
     description:
       'An admin dashboard for an online store: product management backed by Firestore, sign-in-gated editing, an orders table, and sales charts.',
     screenshot: storeAdminShot,
@@ -115,11 +114,12 @@ export const experience = [
     period: 'Mar 2024 – Oct 2024',
     location: 'New York, NY',
     points: [
-      'Built a developer-facing web app, shipped as a Cortex plugin, that streamlines common ops like creating a new service or a Snowflake database.',
-      'Automated system cataloging and owner identification, leading to 100% team ownership of products.',
-      'Built Cortex plugins and templates in TypeScript and React, and managed infrastructure deployments with AWS CDK.',
+      'Built internal developer platform features as TypeScript and React plugins for Cortex, automating service creation, resource management and engineering workflows.',
+      'Built a GitLab-to-GitHub migration assistant with API integrations, async status polling, validation and error handling, so teams could migrate their own repos.',
+      'Automated AWS infrastructure provisioning and deployments with AWS CDK and TypeScript across the monitoring, scaffolding and migration tool stacks.',
+      'Moved service-catalog workflows from file-based processes to bulk Cortex API submissions, helping reach 100% documented ownership across cataloged products.',
     ],
-    stack: ['TypeScript', 'React', 'AWS CDK', 'Cortex'],
+    stack: ['TypeScript', 'React', 'Node.js', 'AWS CDK', 'Cortex', 'Docker'],
   },
   {
     company: 'Jefferies',
@@ -127,16 +127,17 @@ export const experience = [
     period: 'Feb 2023 – Aug 2023',
     location: 'New York, NY',
     points: [
-      'Built a risk aggregation app for the mortgage trading desks, used by the COO, CFO and dozens of traders, with Java Spring Boot and Kafka.',
-      'Launched an internal logging, alerting and observability platform: 7 new dashboards and 60% faster incident detection.',
-      'Automated data-pull tasks for an over 85% cut in analysis time, and helped migrate kdb+ databases to AWS for up to 40% faster queries.',
+      'Developed and supported Java applications for the ION Trading Platform, integrating custom APIs to improve trader workflows.',
+      'Built a risk aggregation app for the mortgage trading desks with Java, Spring Boot and Kafka, supporting the COO, CFO and dozens of traders.',
+      'Built an internal observability platform with Python, Prometheus, Grafana, Loki and Promtail: seven dashboards and critical alerts that cut incident detection time by 60%.',
+      'Automated kdb+ data extraction and analysis with Python and Unix scripting, cutting analysis time by more than 85%, and helped migrate kdb+ databases to AWS for up to 40% faster queries.',
     ],
-    stack: ['Java', 'Spring Boot', 'Kafka', 'Python', 'Grafana', 'Prometheus', 'AWS'],
+    stack: ['Java', 'Spring Boot', 'Kafka', 'Python', 'Prometheus', 'Grafana', 'Loki', 'kdb+', 'AWS'],
   },
 ]
 
 export const education = [
-  { school: 'Western Governors University', credential: 'B.S. Computer Science', period: 'Expected May 2027' },
+  { school: 'Western Governors University', credential: 'B.S. Computer Science', period: 'In progress' },
   { school: 'Year Up NY', credential: 'Technical Diploma, Software Development', period: 'Aug 2023' },
 ]
 
@@ -152,7 +153,6 @@ export const stack: { group: string; items: StackItem[] }[] = [
       { name: 'Python', logo: python },
       { name: 'HTML', logo: html5 },
       { name: 'CSS', logo: css3 },
-      { name: 'R', logo: rLang },
     ],
   },
   {
@@ -178,7 +178,7 @@ export const stack: { group: string; items: StackItem[] }[] = [
   {
     group: 'Cloud & tools',
     items: [
-      { name: 'AWS', logo: aws, note: 'S3, EC2, Lambda, CDK, Redshift' },
+      { name: 'AWS', logo: aws, note: 'EC2, S3, Lambda, Redshift, CDK' },
       { name: 'Docker', logo: docker },
       { name: 'Git', logo: git },
       { name: 'Prometheus', logo: prometheus },

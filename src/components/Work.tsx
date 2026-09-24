@@ -89,7 +89,7 @@ function MoreProjects() {
               height={756}
               loading="lazy"
               decoding="async"
-              alt="Store Admin Dashboard overview: sales, users, products and conversion rate cards above a sales line chart and a category pie chart."
+              alt="E-Commerce Admin Dashboard overview: sales, users, products and conversion rate cards above a sales line chart and a category pie chart."
               className="w-full rounded-t-xl shadow-[0_20px_50px_-20px_rgba(22,20,15,0.35)] ring-1 ring-ink/10 transition duration-500 ease-out group-hover:-translate-y-1"
             />
           </div>
