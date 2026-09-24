@@ -4,6 +4,7 @@ import { Impact } from './components/Impact'
 import { Work } from './components/Work'
 import { Experience } from './components/Experience'
 import { Stack } from './components/Stack'
+import { Contact } from './components/Contact'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Experience />
         <Stack />
       </main>
+      <Contact />
     </>
   )
 }
