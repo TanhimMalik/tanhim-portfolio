@@ -42,9 +42,14 @@ export function Nav() {
     <header className="fixed inset-x-0 top-3 z-50 px-3 sm:top-4">
       <nav
         aria-label="Main"
-        className="mx-auto flex max-w-3xl items-center justify-between gap-2 rounded-full border border-line/80 bg-surface/75 p-1.5 pl-5 shadow-[0_12px_32px_-14px_rgba(22,20,15,0.22)] backdrop-blur-md"
+        className="mx-auto flex max-w-3xl items-center justify-between gap-2 rounded-full border border-line/80 bg-surface/75 p-1.5 pl-2 shadow-[0_12px_32px_-14px_rgba(22,20,15,0.22)] backdrop-blur-md"
       >
-        <a href="#top" className="font-display text-[15px] font-bold tracking-tight">
+        <a href="#top" className="flex items-center gap-2.5 font-display text-[15px] font-bold tracking-tight">
+          <svg viewBox="0 0 64 64" aria-hidden className="size-8 shrink-0">
+            <rect width="64" height="64" rx="16" className="fill-ink" />
+            <path d="M14 15h28v8H32v26h-8V23H14z" className="fill-canvas" />
+            <circle cx="46" cy="44.5" r="5" className="fill-accent" />
+          </svg>
           {profile.name}
         </a>
 
