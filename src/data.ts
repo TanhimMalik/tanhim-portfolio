@@ -9,6 +9,7 @@ import java from './assets/logos/java.svg'
 import python from './assets/logos/python.svg'
 import html5 from './assets/logos/html5.svg'
 import css3 from './assets/logos/css3.svg'
+import rLang from './assets/logos/r.svg'
 import react from './assets/logos/react.svg'
 import nextjs from './assets/logos/nextjs.svg'
 import tailwind from './assets/logos/tailwindcss.svg'
@@ -156,6 +157,7 @@ export const stack: { group: string; items: StackItem[] }[] = [
       { name: 'JavaScript', logo: javascript },
       { name: 'Java', logo: java },
       { name: 'Python', logo: python },
+      { name: 'R', logo: rLang },
       { name: 'HTML', logo: html5 },
       { name: 'CSS', logo: css3 },
     ],
