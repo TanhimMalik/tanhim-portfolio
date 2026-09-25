@@ -1,6 +1,8 @@
 import soldraShot from './assets/projects/soldra-dashboard.webp'
+import soldraShotSmall from './assets/projects/soldra-dashboard-800.webp'
 import soldraMark from './assets/projects/soldra-mark.svg'
 import storeAdminShot from './assets/projects/store-admin.webp'
+import storeAdminShotSmall from './assets/projects/store-admin-800.webp'
 import typescript from './assets/logos/typescript.svg'
 import javascript from './assets/logos/javascript.svg'
 import java from './assets/logos/java.svg'
@@ -68,6 +70,7 @@ export const soldra = {
   solution:
     "Soldra imports sales from six marketplaces, takes off every fee and what you paid for the item, and shows the profit that's actually yours, plus what to set aside each tax quarter.",
   screenshot: soldraShot,
+  screenshotSmall: soldraShotSmall,
   logo: soldraMark,
   details: [
     {
@@ -96,6 +99,7 @@ export const projects = [
     description:
       'An admin dashboard for an online store: product management backed by Firestore, sign-in-gated editing, an orders table, and sales charts.',
     screenshot: storeAdminShot,
+    screenshotSmall: storeAdminShotSmall,
     stack: ['React', 'Vite', 'Tailwind CSS', 'Firebase', 'Recharts', 'Framer Motion'],
     live: 'https://store-admin-dashboard-eight.vercel.app',
     source: 'https://github.com/TanhimMalik/Store-Admin-Dashboard',

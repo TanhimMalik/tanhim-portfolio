@@ -59,6 +59,8 @@ function Featured() {
           <div className="lg:col-span-7">
             <img
               src={soldra.screenshot}
+              srcSet={`${soldra.screenshotSmall} 800w, ${soldra.screenshot} 1600w`}
+              sizes="(min-width: 1024px) 550px, (min-width: 640px) calc(100vw - 144px), calc(100vw - 88px)"
               width={1600}
               height={938}
               loading="lazy"
@@ -92,6 +94,8 @@ function MoreProjects() {
           <div className="overflow-clip border-b border-line bg-sunken px-5 pt-5 sm:px-8 sm:pt-8">
             <img
               src={project.screenshot}
+              srcSet={`${project.screenshotSmall} 800w, ${project.screenshot} 1600w`}
+              sizes="(min-width: 1024px) 655px, (min-width: 640px) calc(100vw - 128px), calc(100vw - 80px)"
               width={1600}
               height={756}
               loading="lazy"
