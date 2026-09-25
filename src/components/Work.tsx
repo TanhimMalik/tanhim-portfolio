@@ -1,8 +1,11 @@
+import { useRef, type PointerEvent, type PropsWithChildren } from 'react'
 import { ArrowUpRight, GithubLogo, LockSimple } from '@phosphor-icons/react'
 import { profile, projects, soldra, thisSite } from '../data'
 import { Reveal } from './Reveal'
 import { SectionHeading } from './SectionHeading'
-import { buttonPrimary, buttonSecondary, chip, container, eyebrow } from './ui'
+import { buttonPrimary, buttonSecondary, chip, container, eyebrow, nudgeUpRight, textLink, underline } from './ui'
+
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
 
 export function Work() {
   return (
@@ -21,11 +24,11 @@ function Featured() {
     <Reveal className="mt-14">
       <article
         id="soldra"
-        className="relative isolate overflow-clip rounded-[2rem] bg-night text-night-ink dark:ring-1 dark:ring-white/10"
+        className="group/soldra relative isolate overflow-clip rounded-[2rem] bg-night text-night-ink dark:ring-1 dark:ring-white/10"
       >
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute -top-48 -left-32 size-[38rem] rounded-full bg-[#6fa0c4] opacity-20 blur-[140px]" />
-          <div className="absolute top-1/4 -right-40 size-[32rem] rounded-full bg-[#f0925c] opacity-15 blur-[140px]" />
+          <div className="absolute -top-48 -left-32 size-[38rem] rounded-full bg-[#6fa0c4] opacity-20 blur-[140px] transition-opacity duration-700 group-hover/soldra:opacity-30" />
+          <div className="absolute top-1/4 -right-40 size-[32rem] rounded-full bg-[#f0925c] opacity-15 blur-[140px] transition-opacity duration-700 group-hover/soldra:opacity-25" />
         </div>
 
         <div className="grid gap-10 p-6 sm:p-10 lg:grid-cols-12 lg:items-center lg:gap-12 lg:p-14">
@@ -56,7 +59,7 @@ function Featured() {
             </p>
           </div>
 
-          <div className="lg:col-span-7">
+          <Tilt className="lg:col-span-7">
             <img
               src={soldra.screenshot}
               srcSet={`${soldra.screenshotSmall} 800w, ${soldra.screenshot} 1600w`}
@@ -68,7 +71,7 @@ function Featured() {
               alt="Soldra's dashboard: profit kept this year, total sold, the next quarterly tax date, and a sold-versus-kept chart for the last six months."
               className="w-full rounded-2xl shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)] ring-1 ring-white/10"
             />
-          </div>
+          </Tilt>
         </div>
 
         <ul className="grid gap-px border-t border-night-line bg-night-line sm:grid-cols-2 lg:grid-cols-4">
@@ -117,7 +120,7 @@ function MoreProjects() {
             <div className="mt-auto flex flex-wrap gap-3 pt-7">
               <a href={project.live} target="_blank" rel="noreferrer" className={buttonPrimary}>
                 Live demo
-                <ArrowUpRight weight="bold" className="size-4" aria-hidden />
+                <ArrowUpRight weight="bold" className={`size-4 ${nudgeUpRight}`} aria-hidden />
               </a>
               <a href={project.source} target="_blank" rel="noreferrer" className={buttonSecondary}>
                 <GithubLogo weight="fill" className="size-4" aria-hidden />
@@ -138,11 +141,11 @@ function MoreProjects() {
               href={thisSite.source}
               target="_blank"
               rel="noreferrer"
-              className="mt-auto inline-flex items-center gap-2 pt-6 text-sm font-semibold text-ink transition-colors hover:text-accent-ink"
+              className={`${textLink} mt-auto self-start pt-6 text-sm font-semibold`}
             >
               <GithubLogo weight="fill" className="size-4" aria-hidden />
-              View source
-              <ArrowUpRight weight="bold" className="size-3.5" aria-hidden />
+              <span className={underline}>View source</span>
+              <ArrowUpRight weight="bold" className={`size-3.5 ${nudgeUpRight}`} aria-hidden />
             </a>
           </article>
         </Reveal>
@@ -167,6 +170,34 @@ function MoreProjects() {
           </a>
         </Reveal>
       </div>
+    </div>
+  )
+}
+
+function Tilt({ className, children }: PropsWithChildren<{ className?: string }>) {
+  const ref = useRef<HTMLDivElement>(null)
+
+  const onMove = (e: PointerEvent<HTMLDivElement>) => {
+    const el = ref.current
+    if (!el || e.pointerType !== 'mouse' || reduceMotion.matches) return
+    const rect = el.getBoundingClientRect()
+    const x = (e.clientX - rect.left) / rect.width - 0.5
+    const y = (e.clientY - rect.top) / rect.height - 0.5
+    el.style.transform = `perspective(1200px) rotateX(${(-y * 6).toFixed(2)}deg) rotateY(${(x * 6).toFixed(2)}deg)`
+  }
+
+  const onLeave = () => {
+    if (ref.current) ref.current.style.transform = ''
+  }
+
+  return (
+    <div
+      ref={ref}
+      onPointerMove={onMove}
+      onPointerLeave={onLeave}
+      className={`transition-transform duration-300 ease-out ${className ?? ''}`}
+    >
+      {children}
     </div>
   )
 }
