@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { DownloadSimple, List, Moon, Sun, X } from '@phosphor-icons/react'
 import { profile } from '../data'
 import { useTheme } from '../useTheme'
+import { nudgeDown } from './ui'
 
 const LINKS = [
   { href: '#work', label: 'Work' },
@@ -16,6 +17,25 @@ export function Nav() {
   const { dark, toggle } = useTheme()
   const ThemeIcon = dark ? Sun : Moon
   const themeLabel = dark ? 'Switch to light mode' : 'Switch to dark mode'
+  const [hovered, setHovered] = useState<string | null>(null)
+  const [pill, setPill] = useState({ left: 0, width: 0, visible: false, instant: true })
+  const linksRef = useRef<HTMLDivElement>(null)
+  const target = hovered ?? active
+
+  useLayoutEffect(() => {
+    const measure = () => {
+      const link = target ? linksRef.current?.querySelector<HTMLElement>(`a[href="${target}"]`) : null
+      setPill((prev) =>
+        link
+          ? { left: link.offsetLeft, width: link.offsetWidth, visible: true, instant: !prev.visible }
+          : { ...prev, visible: false },
+      )
+    }
+    measure()
+    document.fonts.ready.then(measure)
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
+  }, [target])
 
   useEffect(() => {
     const targets = ['#top', ...LINKS.map((link) => link.href)]
@@ -57,21 +77,33 @@ export function Nav() {
           {profile.name}
         </a>
 
-        <ul className="hidden items-center gap-1 md:flex">
-          {LINKS.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                aria-current={active === link.href ? 'location' : undefined}
-                className={`rounded-full px-3.5 py-2 text-sm font-medium transition-colors ${
-                  active === link.href ? 'bg-sunken text-ink' : 'text-muted hover:text-ink'
-                }`}
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
+        <div ref={linksRef} className="relative hidden md:block" onPointerLeave={() => setHovered(null)}>
+          <span
+            aria-hidden
+            className={`pointer-events-none absolute inset-y-0 left-0 rounded-full bg-sunken duration-300 ease-out ${
+              pill.instant ? 'transition-opacity' : 'transition-[transform,width,opacity]'
+            }`}
+            style={{ width: pill.width, transform: `translateX(${pill.left}px)`, opacity: pill.visible ? 1 : 0 }}
+          />
+          <ul className="relative flex items-center gap-1">
+            {LINKS.map((link) => (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  aria-current={active === link.href ? 'location' : undefined}
+                  onPointerEnter={() => setHovered(link.href)}
+                  onFocus={() => setHovered(link.href)}
+                  onBlur={() => setHovered(null)}
+                  className={`block rounded-full px-3.5 py-2 text-sm font-medium transition-colors ${
+                    target === link.href ? 'text-ink' : 'text-muted'
+                  }`}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
 
         <div className="flex items-center gap-1">
           <button
@@ -85,10 +117,10 @@ export function Nav() {
           <a
             href={profile.resume}
             download
-            className="inline-flex min-h-10 items-center gap-2 rounded-full bg-ink px-4 text-sm font-semibold text-canvas transition hover:bg-ink-soft"
+            className="group/btn inline-flex min-h-10 items-center gap-2 rounded-full bg-ink px-4 text-sm font-semibold text-canvas transition hover:bg-ink-soft"
           >
             Resume
-            <DownloadSimple weight="bold" className="size-4" aria-hidden />
+            <DownloadSimple weight="bold" className={`size-4 ${nudgeDown}`} aria-hidden />
           </a>
           <button
             type="button"
