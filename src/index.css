@@ -27,6 +27,32 @@
   --color-night-muted: #a8a399;
 
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-drift-a: drift-a 26s ease-in-out infinite;
+  --animate-drift-b: drift-b 32s ease-in-out infinite;
+
+  @keyframes drift-a {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    33% {
+      transform: translate3d(-5%, 7%, 0) scale(1.07);
+    }
+    66% {
+      transform: translate3d(4%, -3%, 0) scale(0.96);
+    }
+  }
+
+  @keyframes drift-b {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(9%, -6%, 0) scale(1.1);
+    }
+  }
 }
 
 @layer base {
@@ -111,5 +137,6 @@
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

@@ -1,15 +1,16 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { ArrowUp, Check, Copy, DownloadSimple, EnvelopeSimple, GithubLogo, LinkedinLogo } from '@phosphor-icons/react'
 import { profile } from '../data'
+import { useCursorPull } from '../useCursorPull'
 import { Reveal } from './Reveal'
-import { buttonPrimary, buttonSecondary, container, eyebrow } from './ui'
-
-const linkClass = 'inline-flex items-center gap-2 text-ink transition-colors hover:text-accent-ink'
+import { buttonPrimary, buttonSecondary, container, eyebrow, nudgeDown, nudgeUp, textLink, underline } from './ui'
 
 const copyLabels = { idle: 'Copy email', copied: 'Copied', failed: "Couldn't copy" }
 
 export function Contact() {
   const [copyState, setCopyState] = useState<keyof typeof copyLabels>('idle')
+  const glowRef = useRef<HTMLDivElement>(null)
+  useCursorPull(glowRef)
 
   const copyEmail = () => {
     const show = (state: keyof typeof copyLabels) => {
@@ -27,9 +28,13 @@ export function Contact() {
       <div className={container}>
         <Reveal>
           <div className="relative isolate overflow-clip rounded-[2rem] border border-line bg-surface px-6 py-12 sm:px-12 sm:py-16 lg:px-16 lg:py-20">
-            <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-              <div className="absolute -right-24 -bottom-48 size-[30rem] rounded-full bg-[#ffb28a] opacity-40 blur-[110px] dark:opacity-15" />
-              <div className="absolute -bottom-48 left-1/4 size-[24rem] rounded-full bg-[#a9c1ea] opacity-25 blur-[110px] dark:opacity-10" />
+            <div ref={glowRef} aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+              <div data-pull="1" className="absolute -right-24 -bottom-48">
+                <div className="size-[30rem] animate-drift-a rounded-full bg-[#ffb28a] opacity-40 blur-[110px] dark:opacity-15" />
+              </div>
+              <div data-pull="0.6" className="absolute -bottom-48 left-1/4">
+                <div className="size-[24rem] animate-drift-b rounded-full bg-[#a9c1ea] opacity-25 blur-[110px] dark:opacity-10" />
+              </div>
             </div>
 
             <p className={`${eyebrow} text-accent-ink`}>Contact</p>
@@ -53,17 +58,17 @@ export function Contact() {
             </div>
 
             <div className="mt-10 flex flex-wrap gap-x-7 gap-y-3 text-sm font-semibold">
-              <a href={profile.github} target="_blank" rel="noreferrer" className={linkClass}>
+              <a href={profile.github} target="_blank" rel="noreferrer" className={textLink}>
                 <GithubLogo weight="fill" className="size-4" aria-hidden />
-                GitHub
+                <span className={underline}>GitHub</span>
               </a>
-              <a href={profile.linkedin} target="_blank" rel="noreferrer" className={linkClass}>
+              <a href={profile.linkedin} target="_blank" rel="noreferrer" className={textLink}>
                 <LinkedinLogo weight="fill" className="size-4" aria-hidden />
-                LinkedIn
+                <span className={underline}>LinkedIn</span>
               </a>
-              <a href={profile.resume} download className={linkClass}>
-                <DownloadSimple weight="bold" className="size-4" aria-hidden />
-                Resume
+              <a href={profile.resume} download className={textLink}>
+                <DownloadSimple weight="bold" className={`size-4 ${nudgeDown}`} aria-hidden />
+                <span className={underline}>Resume</span>
               </a>
             </div>
           </div>
@@ -73,9 +78,9 @@ export function Contact() {
           <p>
             © {new Date().getFullYear()} {profile.name}
           </p>
-          <a href="#top" className="inline-flex items-center gap-1.5 font-medium transition-colors hover:text-ink">
-            Back to top
-            <ArrowUp weight="bold" className="size-3.5" aria-hidden />
+          <a href="#top" className="group/link inline-flex items-center gap-1.5 font-medium transition-colors hover:text-ink">
+            <span className={underline}>Back to top</span>
+            <ArrowUp weight="bold" className={`size-3.5 ${nudgeUp}`} aria-hidden />
           </a>
         </div>
       </div>

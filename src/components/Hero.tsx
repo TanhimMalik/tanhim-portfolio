@@ -1,15 +1,24 @@
+import { useRef } from 'react'
 import { ArrowRight, DownloadSimple, GithubLogo, LinkedinLogo } from '@phosphor-icons/react'
 import { profile } from '../data'
+import { useCursorPull } from '../useCursorPull'
 import { Reveal } from './Reveal'
-import { buttonPrimary, buttonSecondary, container, eyebrow } from './ui'
+import { buttonPrimary, buttonSecondary, container, eyebrow, nudgeDown } from './ui'
 
 export function Hero() {
+  const glowRef = useRef<HTMLDivElement>(null)
+  useCursorPull(glowRef)
+
   return (
     <section id="top" className="relative isolate overflow-clip pt-36 pb-16 sm:pt-44 sm:pb-24">
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+      <div ref={glowRef} aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[radial-gradient(circle,var(--color-dot)_1px,transparent_1.2px)] [background-size:22px_22px] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_0%,black,transparent)]" />
-        <div className="absolute -top-32 right-[-8%] size-[34rem] rounded-full bg-[#ffb28a] opacity-45 blur-[110px] dark:opacity-15" />
-        <div className="absolute top-24 left-[-12%] size-[28rem] rounded-full bg-[#a9c1ea] opacity-30 blur-[110px] dark:opacity-10" />
+        <div data-pull="1" className="absolute -top-32 right-[-8%]">
+          <div className="size-[34rem] animate-drift-a rounded-full bg-[#ffb28a] opacity-45 blur-[110px] dark:opacity-15" />
+        </div>
+        <div data-pull="0.6" className="absolute top-24 left-[-12%]">
+          <div className="size-[28rem] animate-drift-b rounded-full bg-[#a9c1ea] opacity-30 blur-[110px] dark:opacity-10" />
+        </div>
       </div>
 
       <div className={container}>
@@ -44,7 +53,7 @@ export function Hero() {
         <Reveal delay={240}>
           <div className="mt-9 flex flex-wrap gap-3">
             <a href={profile.resume} download className={buttonPrimary}>
-              <DownloadSimple weight="bold" className="size-4" aria-hidden />
+              <DownloadSimple weight="bold" className={`size-4 ${nudgeDown}`} aria-hidden />
               Download resume
             </a>
             <a href={profile.github} target="_blank" rel="noreferrer" className={buttonSecondary}>
