@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
-import { DownloadSimple, List, X } from '@phosphor-icons/react'
+import { DownloadSimple, List, Moon, Sun, X } from '@phosphor-icons/react'
 import { profile } from '../data'
+import { useTheme } from '../useTheme'
 
 const LINKS = [
   { href: '#work', label: 'Work' },
@@ -12,6 +13,9 @@ const LINKS = [
 export function Nav() {
   const [active, setActive] = useState('')
   const [open, setOpen] = useState(false)
+  const { dark, toggle } = useTheme()
+  const ThemeIcon = dark ? Sun : Moon
+  const themeLabel = dark ? 'Switch to light mode' : 'Switch to dark mode'
 
   useEffect(() => {
     const targets = ['#top', ...LINKS.map((link) => link.href)]
@@ -44,7 +48,7 @@ export function Nav() {
         aria-label="Main"
         className="mx-auto flex max-w-3xl items-center justify-between gap-2 rounded-full border border-line/80 bg-surface/75 p-1.5 pl-2 shadow-[0_12px_32px_-14px_rgba(22,20,15,0.22)] backdrop-blur-md"
       >
-        <a href="#top" className="flex items-center gap-2.5 font-display text-[15px] font-bold tracking-tight">
+        <a href="#top" className="flex items-center gap-2.5 font-display text-[15px] font-bold tracking-tight whitespace-nowrap">
           <svg viewBox="0 0 64 64" aria-hidden className="size-8 shrink-0">
             <rect width="64" height="64" rx="16" className="fill-ink" />
             <path d="M14 15h28v8H32v26h-8V23H14z" className="fill-canvas" />
@@ -70,6 +74,14 @@ export function Nav() {
         </ul>
 
         <div className="flex items-center gap-1">
+          <button
+            type="button"
+            onClick={toggle}
+            aria-label={themeLabel}
+            className="hidden size-10 cursor-pointer place-items-center rounded-full text-ink transition hover:bg-sunken md:grid"
+          >
+            <ThemeIcon weight="bold" className="size-5" aria-hidden />
+          </button>
           <a
             href={profile.resume}
             download
@@ -108,6 +120,17 @@ export function Nav() {
               </a>
             </li>
           ))}
+          <li className="mt-1 border-t border-line pt-1">
+            <button
+              type="button"
+              onClick={toggle}
+              aria-label={themeLabel}
+              className="flex w-full cursor-pointer items-center justify-between rounded-2xl px-4 py-3 text-base font-medium text-ink transition-colors hover:bg-sunken"
+            >
+              {dark ? 'Light mode' : 'Dark mode'}
+              <ThemeIcon weight="bold" className="size-5" aria-hidden />
+            </button>
+          </li>
         </ul>
       </div>
     </header>
