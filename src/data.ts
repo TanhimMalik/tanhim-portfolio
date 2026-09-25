@@ -61,7 +61,8 @@ export const impact = [
 export const soldra = {
   name: 'Soldra',
   tagline: 'Profit and tax tracking for online resellers.',
-  status: 'Beta coming soon',
+  status: 'In development',
+  note: 'Private repo, happy to walk through the code.',
   problem:
     'Resellers know what they sold, not what they kept. Payouts look like income until the fees, shipping and cost of the item come off, and the self-employment tax bill shows up in April.',
   solution:

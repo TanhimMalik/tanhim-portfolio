@@ -1,4 +1,4 @@
-import { ArrowUpRight, GithubLogo } from '@phosphor-icons/react'
+import { ArrowUpRight, GithubLogo, LockSimple } from '@phosphor-icons/react'
 import { profile, projects, soldra, thisSite } from '../data'
 import { Reveal } from './Reveal'
 import { SectionHeading } from './SectionHeading'
@@ -47,6 +47,10 @@ function Featured() {
                 </li>
               ))}
             </ul>
+            <p className="mt-6 flex items-center gap-2 text-sm text-night-muted">
+              <LockSimple weight="bold" className="size-4 shrink-0" aria-hidden />
+              {soldra.note}
+            </p>
           </div>
 
           <div className="lg:col-span-7">
