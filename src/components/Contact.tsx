@@ -28,8 +28,8 @@ export function Contact() {
         <Reveal>
           <div className="relative isolate overflow-clip rounded-[2rem] border border-line bg-surface px-6 py-12 sm:px-12 sm:py-16 lg:px-16 lg:py-20">
             <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-              <div className="absolute -right-24 -bottom-48 size-[30rem] rounded-full bg-[#ffb28a] opacity-40 blur-[110px]" />
-              <div className="absolute -bottom-48 left-1/4 size-[24rem] rounded-full bg-[#a9c1ea] opacity-25 blur-[110px]" />
+              <div className="absolute -right-24 -bottom-48 size-[30rem] rounded-full bg-[#ffb28a] opacity-40 blur-[110px] dark:opacity-15" />
+              <div className="absolute -bottom-48 left-1/4 size-[24rem] rounded-full bg-[#a9c1ea] opacity-25 blur-[110px] dark:opacity-10" />
             </div>
 
             <p className={`${eyebrow} text-accent-ink`}>Contact</p>

@@ -19,7 +19,7 @@ export function Stack() {
                     key={item.name}
                     className="flex items-center gap-3 rounded-2xl border border-line bg-surface p-3 pr-4 transition duration-200 hover:-translate-y-0.5 hover:border-ink/15"
                   >
-                    <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-canvas">
+                    <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-canvas dark:bg-night-ink">
                       <img src={item.logo} alt="" width={24} height={24} className="size-6" loading="lazy" />
                     </span>
                     <span className="min-w-0">

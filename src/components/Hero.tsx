@@ -7,9 +7,9 @@ export function Hero() {
   return (
     <section id="top" className="relative isolate overflow-clip pt-36 pb-16 sm:pt-44 sm:pb-24">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(22,20,15,0.09)_1px,transparent_1.2px)] [background-size:22px_22px] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_0%,black,transparent)]" />
-        <div className="absolute -top-32 right-[-8%] size-[34rem] rounded-full bg-[#ffb28a] opacity-45 blur-[110px]" />
-        <div className="absolute top-24 left-[-12%] size-[28rem] rounded-full bg-[#a9c1ea] opacity-30 blur-[110px]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle,var(--color-dot)_1px,transparent_1.2px)] [background-size:22px_22px] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_0%,black,transparent)]" />
+        <div className="absolute -top-32 right-[-8%] size-[34rem] rounded-full bg-[#ffb28a] opacity-45 blur-[110px] dark:opacity-15" />
+        <div className="absolute top-24 left-[-12%] size-[28rem] rounded-full bg-[#a9c1ea] opacity-30 blur-[110px] dark:opacity-10" />
       </div>
 
       <div className={container}>

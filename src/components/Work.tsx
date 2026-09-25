@@ -19,7 +19,10 @@ export function Work() {
 function Featured() {
   return (
     <Reveal className="mt-14">
-      <article id="soldra" className="relative isolate overflow-clip rounded-[2rem] bg-night text-night-ink">
+      <article
+        id="soldra"
+        className="relative isolate overflow-clip rounded-[2rem] bg-night text-night-ink dark:ring-1 dark:ring-white/10"
+      >
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute -top-48 -left-32 size-[38rem] rounded-full bg-[#6fa0c4] opacity-20 blur-[140px]" />
           <div className="absolute top-1/4 -right-40 size-[32rem] rounded-full bg-[#f0925c] opacity-15 blur-[140px]" />
@@ -145,7 +148,7 @@ function MoreProjects() {
             href={profile.github}
             target="_blank"
             rel="noreferrer"
-            className="group relative flex h-full min-h-56 flex-col justify-between overflow-clip rounded-[2rem] bg-accent p-6 text-ink transition hover:brightness-105 sm:p-8"
+            className="group relative flex h-full min-h-56 flex-col justify-between overflow-clip rounded-[2rem] bg-accent p-6 text-on-accent transition hover:brightness-105 sm:p-8"
           >
             <GithubLogo weight="fill" className="size-9" aria-hidden />
             <ArrowUpRight
@@ -155,7 +158,7 @@ function MoreProjects() {
             />
             <div>
               <h3 className="text-2xl font-bold tracking-tight">More on GitHub</h3>
-              <p className="mt-2 text-ink/85">Everything else I've been working on.</p>
+              <p className="mt-2 text-on-accent/85">Everything else I've been working on.</p>
             </div>
           </a>
         </Reveal>

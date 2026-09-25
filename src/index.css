@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-display: "Bricolage Grotesque Variable", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
@@ -15,6 +17,8 @@
   --color-faint: #8a8377;
   --color-accent: #ff5a1f;
   --color-accent-ink: #c2410c;
+  --color-on-accent: #16140f;
+  --color-dot: rgb(22 20 15 / 0.09);
 
   --color-night: #101318;
   --color-night-raised: #181c23;
@@ -28,6 +32,20 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+  }
+
+  html.dark {
+    color-scheme: dark;
+    --color-canvas: #151412;
+    --color-surface: #1e1d1a;
+    --color-sunken: #2a2824;
+    --color-line: #35322d;
+    --color-ink: #f3f0ea;
+    --color-ink-soft: #d7d2c8;
+    --color-muted: #a9a399;
+    --color-faint: #7f796f;
+    --color-accent-ink: #ff8b5e;
+    --color-dot: rgb(243 240 234 / 0.07);
   }
 
   body {
