@@ -10,6 +10,8 @@ import python from './assets/logos/python.svg'
 import html5 from './assets/logos/html5.svg'
 import css3 from './assets/logos/css3.svg'
 import rLang from './assets/logos/r.svg'
+import sql from './assets/logos/sql.svg'
+import kdb from './assets/logos/kdb.svg'
 import react from './assets/logos/react.svg'
 import nextjs from './assets/logos/nextjs.svg'
 import tailwind from './assets/logos/tailwindcss.svg'
@@ -158,6 +160,7 @@ export const stack: { group: string; items: StackItem[] }[] = [
       { name: 'Java', logo: java },
       { name: 'Python', logo: python },
       { name: 'R', logo: rLang },
+      { name: 'SQL', logo: sql },
       { name: 'HTML', logo: html5 },
       { name: 'CSS', logo: css3 },
     ],
@@ -178,6 +181,7 @@ export const stack: { group: string; items: StackItem[] }[] = [
       { name: 'Flask', logo: flask },
       { name: 'Kafka', logo: kafka },
       { name: 'PostgreSQL', logo: postgres },
+      { name: 'kdb+', logo: kdb, note: 'Time-series database' },
       { name: 'Supabase', logo: supabase },
       { name: 'Firebase', logo: firebase },
     ],
