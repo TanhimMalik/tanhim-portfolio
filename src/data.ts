@@ -1,6 +1,8 @@
 import soldraShot from './assets/projects/soldra-dashboard.webp'
 import soldraShotSmall from './assets/projects/soldra-dashboard-800.webp'
 import soldraMark from './assets/projects/soldra-mark.svg'
+import trackrShot from './assets/projects/trackr.webp'
+import trackrShotSmall from './assets/projects/trackr-800.webp'
 import storeAdminShot from './assets/projects/store-admin.webp'
 import storeAdminShotSmall from './assets/projects/store-admin-800.webp'
 import typescript from './assets/logos/typescript.svg'
@@ -97,6 +99,19 @@ export const soldra = {
 }
 
 export const projects = [
+  {
+    name: 'Trackr',
+    description:
+      'An automatic job-application tracker. It records each application and keeps its status up to date, with a full timeline and one-click undo.',
+    screenshot: trackrShot,
+    screenshotSmall: trackrShotSmall,
+    stack: ['Next.js 16', 'React 19', 'TypeScript', 'Tailwind CSS', 'Postgres (Supabase)', 'Drizzle', 'Vitest'],
+    live: 'https://trackr-coral-gamma.vercel.app/demo',
+    liveLabel: 'Live demo',
+    note: 'No sign-up needed',
+    source: 'https://github.com/TanhimMalik/trackr',
+    sourceLabel: 'Code',
+  },
   {
     name: 'E-Commerce Admin Dashboard',
     description:

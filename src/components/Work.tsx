@@ -88,7 +88,7 @@ function Featured() {
 }
 
 function MoreProjects() {
-  const [project] = projects
+  const [featured, compact] = projects
 
   return (
     <div className="mt-6 grid gap-6 lg:grid-cols-3">
@@ -96,37 +96,22 @@ function MoreProjects() {
         <article className="group flex h-full flex-col overflow-clip rounded-[2rem] border border-line bg-surface">
           <div className="overflow-clip border-b border-line bg-sunken px-5 pt-5 sm:px-8 sm:pt-8">
             <img
-              src={project.screenshot}
-              srcSet={`${project.screenshotSmall} 800w, ${project.screenshot} 1600w`}
+              src={featured.screenshot}
+              srcSet={`${featured.screenshotSmall} 800w, ${featured.screenshot} 1600w`}
               sizes="(min-width: 1024px) 655px, (min-width: 640px) calc(100vw - 128px), calc(100vw - 80px)"
               width={1600}
-              height={756}
+              height={911}
               loading="lazy"
               decoding="async"
-              alt="E-Commerce Admin Dashboard overview: sales, users, products and conversion rate cards above a sales line chart and a category pie chart."
+              alt="Trackr overview: application, interview, response-rate and offer stats above a board of job applications grouped by stage."
               className="w-full rounded-t-xl shadow-[0_20px_50px_-20px_rgba(22,20,15,0.35)] ring-1 ring-ink/10 transition duration-500 ease-out group-hover:-translate-y-1"
             />
           </div>
           <div className="flex flex-1 flex-col p-6 sm:p-8">
-            <h3 className="text-2xl font-bold tracking-tight">{project.name}</h3>
-            <p className="mt-3 leading-relaxed text-muted">{project.description}</p>
-            <ul className="mt-5 flex flex-wrap gap-2" aria-label="Built with">
-              {project.stack.map((tech) => (
-                <li key={tech} className={chip}>
-                  {tech}
-                </li>
-              ))}
-            </ul>
-            <div className="mt-auto flex flex-wrap gap-3 pt-7">
-              <a href={project.live} target="_blank" rel="noreferrer" className={buttonPrimary}>
-                Live demo
-                <ArrowUpRight weight="bold" className={`size-4 ${nudgeUpRight}`} aria-hidden />
-              </a>
-              <a href={project.source} target="_blank" rel="noreferrer" className={buttonSecondary}>
-                <GithubLogo weight="fill" className="size-4" aria-hidden />
-                Source
-              </a>
-            </div>
+            <h3 className="text-3xl font-bold tracking-tight">{featured.name}</h3>
+            <p className="mt-3 text-lg leading-relaxed text-muted">{featured.description}</p>
+            <StackChips stack={featured.stack} />
+            <ProjectLinks project={featured} />
           </div>
         </article>
       </Reveal>
@@ -170,6 +155,57 @@ function MoreProjects() {
           </a>
         </Reveal>
       </div>
+      <Reveal className="lg:col-span-3">
+        <article className="group grid overflow-clip rounded-[2rem] border border-line bg-surface md:grid-cols-5">
+          <div className="overflow-clip border-b border-line bg-sunken px-5 pt-5 md:col-span-2 md:border-r md:border-b-0 md:p-6">
+            <img
+              src={compact.screenshot}
+              srcSet={`${compact.screenshotSmall} 800w, ${compact.screenshot} 1600w`}
+              sizes="(min-width: 768px) 420px, calc(100vw - 80px)"
+              width={1600}
+              height={756}
+              loading="lazy"
+              decoding="async"
+              alt="E-Commerce Admin Dashboard overview: sales, users, products and conversion rate cards above a sales line chart and a category pie chart."
+              className="w-full rounded-t-xl shadow-[0_20px_50px_-20px_rgba(22,20,15,0.35)] ring-1 ring-ink/10 md:rounded-xl"
+            />
+          </div>
+          <div className="flex flex-col p-6 sm:p-8 md:col-span-3">
+            <h3 className="text-2xl font-bold tracking-tight">{compact.name}</h3>
+            <p className="mt-3 leading-relaxed text-muted">{compact.description}</p>
+            <StackChips stack={compact.stack} />
+            <ProjectLinks project={compact} />
+          </div>
+        </article>
+      </Reveal>
+    </div>
+  )
+}
+
+function StackChips({ stack }: { stack: string[] }) {
+  return (
+    <ul className="mt-5 flex flex-wrap gap-2" aria-label="Built with">
+      {stack.map((tech) => (
+        <li key={tech} className={chip}>
+          {tech}
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+function ProjectLinks({ project }: { project: (typeof projects)[number] }) {
+  return (
+    <div className="mt-auto flex flex-wrap items-center gap-3 pt-7">
+      <a href={project.live} target="_blank" rel="noreferrer" className={buttonPrimary}>
+        {project.liveLabel ?? 'Live demo'}
+        <ArrowUpRight weight="bold" className={`size-4 ${nudgeUpRight}`} aria-hidden />
+      </a>
+      <a href={project.source} target="_blank" rel="noreferrer" className={buttonSecondary}>
+        <GithubLogo weight="fill" className="size-4" aria-hidden />
+        {project.sourceLabel ?? 'Source'}
+      </a>
+      {project.note && <span className="text-sm text-muted">{project.note}</span>}
     </div>
   )
 }
