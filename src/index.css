@@ -30,6 +30,20 @@
 
   --animate-drift-a: drift-a 26s ease-in-out infinite;
   --animate-drift-b: drift-b 32s ease-in-out infinite;
+  --animate-rise: rise 0.9s var(--ease-out-soft) both;
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(0.35em);
+      filter: blur(10px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+      filter: blur(0);
+    }
+  }
 
   @keyframes drift-a {
     0%,
@@ -109,16 +123,72 @@
 
 .reveal {
   opacity: 0;
-  transform: translateY(16px);
+  transform: translateY(24px) scale(0.985);
+  filter: blur(6px);
   transition:
-    opacity 0.7s var(--ease-out-soft),
-    transform 0.7s var(--ease-out-soft);
+    opacity 0.8s var(--ease-out-soft),
+    transform 0.8s var(--ease-out-soft),
+    filter 0.8s var(--ease-out-soft);
   transition-delay: var(--reveal-delay, 0ms);
 }
 
 .reveal.is-visible {
   opacity: 1;
   transform: none;
+  filter: none;
+}
+
+/* Cursor spotlight: a soft wash inside the card and a brighter ring on its border. */
+.spotlight {
+  position: relative;
+  isolation: isolate;
+}
+
+.spotlight::before,
+.spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease-out;
+}
+
+.spotlight::before {
+  z-index: -1;
+  background: radial-gradient(
+    420px circle at var(--mx, 50%) var(--my, 50%),
+    rgb(255 90 31 / 0.13),
+    transparent 60%
+  );
+}
+
+.spotlight::after {
+  z-index: 2;
+  padding: 1px;
+  background: radial-gradient(
+    260px circle at var(--mx, 50%) var(--my, 50%),
+    rgb(255 90 31 / 0.85),
+    transparent 70%
+  );
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+}
+
+.spotlight:hover::before,
+.spotlight:hover::after,
+.spotlight-group:hover .spotlight::after {
+  opacity: 1;
+}
+
+html.dark .spotlight::before {
+  background: radial-gradient(
+    420px circle at var(--mx, 50%) var(--my, 50%),
+    rgb(255 90 31 / 0.15),
+    transparent 60%
+  );
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -129,7 +199,13 @@
   .reveal {
     opacity: 1;
     transform: none;
+    filter: none;
     transition: none;
+  }
+
+  .spotlight::before,
+  .spotlight::after {
+    display: none;
   }
 
   *,

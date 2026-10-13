@@ -47,7 +47,7 @@ export function Experience() {
           <h3 className={`${eyebrow} text-muted`}>Education</h3>
           <ul className="mt-5 grid gap-3 sm:grid-cols-2">
             {education.map((item) => (
-              <li key={item.school} className="rounded-3xl border border-line bg-surface p-6 sm:p-7">
+              <li key={item.school} className="spotlight rounded-3xl border border-line bg-surface p-6 sm:p-7">
                 <p className="font-display text-xl font-bold tracking-tight">{item.school}</p>
                 <p className="mt-1 text-ink-soft">{item.credential}</p>
                 <p className={`${eyebrow} mt-5 text-muted`}>{item.period}</p>

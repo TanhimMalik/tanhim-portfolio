@@ -9,7 +9,7 @@ export function Stack() {
       <div className={container}>
         <SectionHeading label="Stack" title="Tools I reach for." />
 
-        <div className="mt-14 space-y-10">
+        <div className="spotlight-group mt-14 space-y-10">
           {stack.map((group) => (
             <Reveal key={group.group}>
               <h3 className={`${eyebrow} text-muted`}>{group.group}</h3>
@@ -17,9 +17,9 @@ export function Stack() {
                 {group.items.map((item) => (
                   <li
                     key={item.name}
-                    className="flex items-center gap-3 rounded-2xl border border-line bg-surface p-3 pr-4"
+                    className="spotlight group flex items-center gap-3 rounded-2xl border border-line bg-surface p-3 pr-4"
                   >
-                    <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-canvas dark:bg-night-ink">
+                    <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-canvas transition-transform duration-300 ease-out group-hover:-rotate-6 group-hover:scale-110 dark:bg-night-ink">
                       <img src={item.logo} alt="" width={24} height={24} className="size-6" loading="lazy" />
                     </span>
                     <span className="min-w-0">
