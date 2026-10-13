@@ -24,29 +24,28 @@ export function Hero() {
       <div className={container}>
         <Reveal>
           <a
-            href="#soldra"
+            href="#contact"
             className="group inline-flex items-center gap-2.5 rounded-full border border-line bg-surface/80 py-1.5 pr-3.5 pl-3 text-sm text-muted shadow-sm backdrop-blur transition hover:border-ink/20 hover:text-ink"
           >
             <span className="relative flex size-2.5">
               <span className="absolute inline-flex size-full animate-ping rounded-full bg-accent opacity-60" />
               <span className="relative inline-flex size-2.5 rounded-full bg-accent" />
             </span>
-            Currently building <span className="font-semibold text-ink">Soldra</span>
+            Open to <span className="font-semibold text-ink">software engineering roles</span>
             <ArrowRight weight="bold" className="size-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden />
           </a>
         </Reveal>
 
-        <Reveal delay={80}>
-          <h1 className="mt-8 max-w-5xl text-[clamp(2.75rem,7vw,5.75rem)] leading-[0.95] font-bold tracking-[-0.045em]">
-            Hi, I'm {profile.firstName}.{' '}
-            <span className="block text-faint">I turn messy workflows into simple tools.</span>
-          </h1>
-        </Reveal>
+        <h1 className="mt-8 max-w-5xl text-[clamp(2.75rem,7vw,5.75rem)] leading-[0.95] font-bold tracking-[-0.045em]">
+          <Words text={`Hi, I'm ${profile.firstName}.`} start={0} />{' '}
+          <span className="block text-faint">
+            <Words text="I turn messy workflows into simple tools." start={3} />
+          </span>
+        </h1>
 
         <Reveal delay={160}>
           <p className="mt-7 max-w-2xl text-lg leading-relaxed text-muted sm:text-xl">
             I'm a software engineer who has built developer tooling at Tripadvisor and trading-desk apps at Jefferies.
-            Right now I'm building Soldra, a profit and tax tracker for online resellers.
           </p>
         </Reveal>
 
@@ -77,4 +76,15 @@ export function Hero() {
       </div>
     </section>
   )
+}
+
+function Words({ text, start }: { text: string; start: number }) {
+  return text.split(' ').map((word, i) => (
+    <span key={i}>
+      {i > 0 && ' '}
+      <span className="inline-block animate-rise" style={{ animationDelay: `${80 + (start + i) * 55}ms` }}>
+        {word}
+      </span>
+    </span>
+  ))
 }

@@ -1,6 +1,6 @@
 import { useRef, type PointerEvent, type PropsWithChildren } from 'react'
 import { ArrowUpRight, GithubLogo, LockSimple } from '@phosphor-icons/react'
-import { profile, projects, soldra, thisSite } from '../data'
+import { profile, projects, thisSite, type Project } from '../data'
 import { Reveal } from './Reveal'
 import { SectionHeading } from './SectionHeading'
 import { buttonPrimary, buttonSecondary, chip, container, eyebrow, nudgeUpRight, textLink, underline } from './ui'
@@ -8,177 +8,126 @@ import { buttonPrimary, buttonSecondary, chip, container, eyebrow, nudgeUpRight,
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
 
 export function Work() {
+  const [featured, ...rest] = projects
+
   return (
     <section id="work" className="py-24 sm:py-32">
       <div className={container}>
-        <SectionHeading label="Selected work" title="Things I've built." aside="And the one I'm building now." />
-        <Featured />
-        <MoreProjects />
+        <SectionHeading label="Selected work" title="Things I've built." />
+
+        <div className="mt-14 grid gap-6 lg:grid-cols-3">
+          <Reveal className="lg:col-span-2">
+            <article className="spotlight group flex h-full flex-col overflow-clip rounded-[2rem] border border-line bg-surface">
+              <div className="overflow-clip border-b border-line bg-sunken px-5 pt-5 sm:px-8 sm:pt-8">
+                <Tilt>
+                  <Screenshot
+                    project={featured}
+                    sizes="(min-width: 1024px) 655px, (min-width: 640px) calc(100vw - 128px), calc(100vw - 80px)"
+                  />
+                </Tilt>
+              </div>
+              <div className="flex flex-1 flex-col p-6 sm:p-8">
+                <h3 className="text-3xl font-bold tracking-tight">{featured.name}</h3>
+                <p className="mt-3 text-lg leading-relaxed text-muted">{featured.description}</p>
+                <StackChips stack={featured.stack} />
+                <ProjectLinks project={featured} />
+              </div>
+            </article>
+          </Reveal>
+
+          <div className="flex flex-col gap-6">
+            <Reveal delay={80} className="flex-1">
+              <article className="spotlight flex h-full flex-col rounded-[2rem] border border-line bg-surface p-6 sm:p-8">
+                <p className={`${eyebrow} text-muted`}>Meta</p>
+                <h3 className="mt-3 text-2xl font-bold tracking-tight">{thisSite.name}</h3>
+                <p className="mt-3 leading-relaxed text-muted">{thisSite.description}</p>
+                <a
+                  href={thisSite.source}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={`${textLink} mt-auto self-start pt-6 text-sm font-semibold`}
+                >
+                  <GithubLogo weight="fill" className="size-4" aria-hidden />
+                  <span className={underline}>View source</span>
+                  <ArrowUpRight weight="bold" className={`size-3.5 ${nudgeUpRight}`} aria-hidden />
+                </a>
+              </article>
+            </Reveal>
+
+            <Reveal delay={160} className="flex-1">
+              <a
+                href={profile.github}
+                target="_blank"
+                rel="noreferrer"
+                className="group relative flex h-full min-h-56 flex-col justify-between overflow-clip rounded-[2rem] bg-accent p-6 text-on-accent transition hover:brightness-105 sm:p-8"
+              >
+                <GithubLogo weight="fill" className="size-9" aria-hidden />
+                <ArrowUpRight
+                  weight="bold"
+                  className="absolute top-6 right-6 size-6 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 sm:top-8 sm:right-8"
+                  aria-hidden
+                />
+                <div>
+                  <h3 className="text-2xl font-bold tracking-tight">More on GitHub</h3>
+                  <p className="mt-2 text-on-accent/85">Everything else I've been working on.</p>
+                </div>
+              </a>
+            </Reveal>
+          </div>
+        </div>
+
+        <div className="mt-6 grid gap-6 md:grid-cols-2">
+          {rest.map((project, i) => (
+            <Reveal key={project.name} delay={i * 80} className="h-full">
+              <ProjectCard project={project} />
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   )
 }
 
-function Featured() {
+function ProjectCard({ project }: { project: Project }) {
   return (
-    <Reveal className="mt-14">
-      <article
-        id="soldra"
-        className="group/soldra relative isolate overflow-clip rounded-[2rem] bg-night text-night-ink dark:ring-1 dark:ring-white/10"
-      >
-        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute -top-48 -left-32 size-[38rem] rounded-full bg-[#6fa0c4] opacity-20 blur-[140px] transition-opacity duration-700 group-hover/soldra:opacity-30" />
-          <div className="absolute top-1/4 -right-40 size-[32rem] rounded-full bg-[#f0925c] opacity-15 blur-[140px] transition-opacity duration-700 group-hover/soldra:opacity-25" />
+    <article className="spotlight group flex h-full flex-col overflow-clip rounded-[2rem] border border-line bg-surface">
+      <div className="overflow-clip border-b border-line bg-sunken px-5 pt-5 sm:px-7 sm:pt-7">
+        <Screenshot
+          project={project}
+          sizes="(min-width: 1152px) 485px, (min-width: 768px) calc(50vw - 92px), calc(100vw - 80px)"
+          className="aspect-[1600/756] object-cover object-top transition duration-500 ease-out group-hover:-translate-y-1"
+        />
+      </div>
+      <div className="flex flex-1 flex-col p-6 sm:p-8">
+        <div className="flex flex-wrap items-center gap-3">
+          <h3 className="text-2xl font-bold tracking-tight">{project.name}</h3>
+          {project.status && (
+            <span className="rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-xs font-semibold text-accent-ink">
+              {project.status}
+            </span>
+          )}
         </div>
-
-        <div className="grid gap-10 p-6 sm:p-10 lg:grid-cols-12 lg:items-center lg:gap-12 lg:p-14">
-          <div className="lg:col-span-5">
-            <div className="flex flex-wrap items-center gap-3">
-              <img src={soldra.logo} alt="" width={36} height={36} className="size-9" />
-              <h3 className="text-3xl font-bold tracking-tight">{soldra.name}</h3>
-              <span className="rounded-full border border-[#f0925c]/40 bg-[#f0925c]/10 px-3 py-1 text-xs font-semibold text-[#f6b48d]">
-                {soldra.status}
-              </span>
-            </div>
-            <p className="mt-5 font-display text-2xl leading-snug font-semibold tracking-tight">{soldra.tagline}</p>
-            <p className="mt-5 leading-relaxed text-night-muted">{soldra.problem}</p>
-            <p className="mt-4 leading-relaxed text-night-muted">{soldra.solution}</p>
-            <ul className="mt-8 flex flex-wrap gap-2" aria-label="Built with">
-              {soldra.stack.map((tech) => (
-                <li
-                  key={tech}
-                  className="rounded-full border border-night-line bg-night-raised px-3 py-1 text-xs font-medium text-night-muted"
-                >
-                  {tech}
-                </li>
-              ))}
-            </ul>
-            <p className="mt-6 flex items-center gap-2 text-sm text-night-muted">
-              <LockSimple weight="bold" className="size-4 shrink-0" aria-hidden />
-              {soldra.note}
-            </p>
-          </div>
-
-          <Tilt className="lg:col-span-7">
-            <img
-              src={soldra.screenshot}
-              srcSet={`${soldra.screenshotSmall} 800w, ${soldra.screenshot} 1600w`}
-              sizes="(min-width: 1024px) 550px, (min-width: 640px) calc(100vw - 144px), calc(100vw - 88px)"
-              width={1600}
-              height={938}
-              loading="lazy"
-              decoding="async"
-              alt="Soldra's dashboard: profit kept this year, total sold, the next quarterly tax date, and a sold-versus-kept chart for the last six months."
-              className="w-full rounded-2xl shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)] ring-1 ring-white/10"
-            />
-          </Tilt>
-        </div>
-
-        <ul className="grid gap-px border-t border-night-line bg-night-line sm:grid-cols-2 lg:grid-cols-4">
-          {soldra.details.map((detail) => (
-            <li key={detail.title} className="bg-night p-6 sm:p-8">
-              <h4 className="text-lg font-semibold tracking-tight">{detail.title}</h4>
-              <p className="mt-2 text-sm leading-relaxed text-night-muted">{detail.body}</p>
-            </li>
-          ))}
-        </ul>
-      </article>
-    </Reveal>
+        <p className="mt-3 leading-relaxed text-muted">{project.description}</p>
+        <StackChips stack={project.stack} />
+        <ProjectLinks project={project} />
+      </div>
+    </article>
   )
 }
 
-function MoreProjects() {
-  const [featured, compact] = projects
-
+function Screenshot({ project, sizes, className = '' }: { project: Project; sizes: string; className?: string }) {
   return (
-    <div className="mt-6 grid gap-6 lg:grid-cols-3">
-      <Reveal className="lg:col-span-2">
-        <article className="group flex h-full flex-col overflow-clip rounded-[2rem] border border-line bg-surface">
-          <div className="overflow-clip border-b border-line bg-sunken px-5 pt-5 sm:px-8 sm:pt-8">
-            <img
-              src={featured.screenshot}
-              srcSet={`${featured.screenshotSmall} 800w, ${featured.screenshot} 1600w`}
-              sizes="(min-width: 1024px) 655px, (min-width: 640px) calc(100vw - 128px), calc(100vw - 80px)"
-              width={1600}
-              height={911}
-              loading="lazy"
-              decoding="async"
-              alt="Trackr overview: application, interview, response-rate and offer stats above a board of job applications grouped by stage."
-              className="w-full rounded-t-xl shadow-[0_20px_50px_-20px_rgba(22,20,15,0.35)] ring-1 ring-ink/10 transition duration-500 ease-out group-hover:-translate-y-1"
-            />
-          </div>
-          <div className="flex flex-1 flex-col p-6 sm:p-8">
-            <h3 className="text-3xl font-bold tracking-tight">{featured.name}</h3>
-            <p className="mt-3 text-lg leading-relaxed text-muted">{featured.description}</p>
-            <StackChips stack={featured.stack} />
-            <ProjectLinks project={featured} />
-          </div>
-        </article>
-      </Reveal>
-
-      <div className="flex flex-col gap-6">
-        <Reveal delay={80} className="flex-1">
-          <article className="flex h-full flex-col rounded-[2rem] border border-line bg-surface p-6 sm:p-8">
-            <p className={`${eyebrow} text-muted`}>Meta</p>
-            <h3 className="mt-3 text-2xl font-bold tracking-tight">{thisSite.name}</h3>
-            <p className="mt-3 leading-relaxed text-muted">{thisSite.description}</p>
-            <a
-              href={thisSite.source}
-              target="_blank"
-              rel="noreferrer"
-              className={`${textLink} mt-auto self-start pt-6 text-sm font-semibold`}
-            >
-              <GithubLogo weight="fill" className="size-4" aria-hidden />
-              <span className={underline}>View source</span>
-              <ArrowUpRight weight="bold" className={`size-3.5 ${nudgeUpRight}`} aria-hidden />
-            </a>
-          </article>
-        </Reveal>
-
-        <Reveal delay={160} className="flex-1">
-          <a
-            href={profile.github}
-            target="_blank"
-            rel="noreferrer"
-            className="group relative flex h-full min-h-56 flex-col justify-between overflow-clip rounded-[2rem] bg-accent p-6 text-on-accent transition hover:brightness-105 sm:p-8"
-          >
-            <GithubLogo weight="fill" className="size-9" aria-hidden />
-            <ArrowUpRight
-              weight="bold"
-              className="absolute top-6 right-6 size-6 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 sm:top-8 sm:right-8"
-              aria-hidden
-            />
-            <div>
-              <h3 className="text-2xl font-bold tracking-tight">More on GitHub</h3>
-              <p className="mt-2 text-on-accent/85">Everything else I've been working on.</p>
-            </div>
-          </a>
-        </Reveal>
-      </div>
-      <Reveal className="lg:col-span-3">
-        <article className="group grid overflow-clip rounded-[2rem] border border-line bg-surface md:grid-cols-5">
-          <div className="overflow-clip border-b border-line bg-sunken px-5 pt-5 md:col-span-2 md:border-r md:border-b-0 md:p-6">
-            <img
-              src={compact.screenshot}
-              srcSet={`${compact.screenshotSmall} 800w, ${compact.screenshot} 1600w`}
-              sizes="(min-width: 768px) 420px, calc(100vw - 80px)"
-              width={1600}
-              height={756}
-              loading="lazy"
-              decoding="async"
-              alt="E-Commerce Admin Dashboard overview: sales, users, products and conversion rate cards above a sales line chart and a category pie chart."
-              className="w-full rounded-t-xl shadow-[0_20px_50px_-20px_rgba(22,20,15,0.35)] ring-1 ring-ink/10 md:rounded-xl"
-            />
-          </div>
-          <div className="flex flex-col p-6 sm:p-8 md:col-span-3">
-            <h3 className="text-2xl font-bold tracking-tight">{compact.name}</h3>
-            <p className="mt-3 leading-relaxed text-muted">{compact.description}</p>
-            <StackChips stack={compact.stack} />
-            <ProjectLinks project={compact} />
-          </div>
-        </article>
-      </Reveal>
-    </div>
+    <img
+      src={project.screenshot}
+      srcSet={`${project.screenshotSmall} 800w, ${project.screenshot} 1600w`}
+      sizes={sizes}
+      width={1600}
+      height={project.height}
+      loading="lazy"
+      decoding="async"
+      alt={project.alt}
+      className={`w-full rounded-t-xl shadow-[0_20px_50px_-20px_rgba(22,20,15,0.35)] ring-1 ring-ink/10 ${className}`}
+    />
   )
 }
 
@@ -194,23 +143,36 @@ function StackChips({ stack }: { stack: string[] }) {
   )
 }
 
-function ProjectLinks({ project }: { project: (typeof projects)[number] }) {
+function ProjectLinks({ project }: { project: Project }) {
+  if (!project.live && !project.source) {
+    return (
+      <p className="mt-auto flex items-center gap-2 pt-7 text-sm text-muted">
+        <LockSimple weight="bold" className="size-4 shrink-0" aria-hidden />
+        {project.note}
+      </p>
+    )
+  }
+
   return (
     <div className="mt-auto flex flex-wrap items-center gap-3 pt-7">
-      <a href={project.live} target="_blank" rel="noreferrer" className={buttonPrimary}>
-        {project.liveLabel ?? 'Live demo'}
-        <ArrowUpRight weight="bold" className={`size-4 ${nudgeUpRight}`} aria-hidden />
-      </a>
-      <a href={project.source} target="_blank" rel="noreferrer" className={buttonSecondary}>
-        <GithubLogo weight="fill" className="size-4" aria-hidden />
-        {project.sourceLabel ?? 'Source'}
-      </a>
+      {project.live && (
+        <a href={project.live} target="_blank" rel="noreferrer" className={buttonPrimary}>
+          {project.liveLabel ?? 'Live demo'}
+          <ArrowUpRight weight="bold" className={`size-4 ${nudgeUpRight}`} aria-hidden />
+        </a>
+      )}
+      {project.source && (
+        <a href={project.source} target="_blank" rel="noreferrer" className={buttonSecondary}>
+          <GithubLogo weight="fill" className="size-4" aria-hidden />
+          {project.sourceLabel ?? 'Source'}
+        </a>
+      )}
       {project.note && <span className="text-sm text-muted">{project.note}</span>}
     </div>
   )
 }
 
-function Tilt({ className, children }: PropsWithChildren<{ className?: string }>) {
+function Tilt({ children }: PropsWithChildren) {
   const ref = useRef<HTMLDivElement>(null)
 
   const onMove = (e: PointerEvent<HTMLDivElement>) => {
@@ -219,7 +181,7 @@ function Tilt({ className, children }: PropsWithChildren<{ className?: string }>
     const rect = el.getBoundingClientRect()
     const x = (e.clientX - rect.left) / rect.width - 0.5
     const y = (e.clientY - rect.top) / rect.height - 0.5
-    el.style.transform = `perspective(1200px) rotateX(${(-y * 6).toFixed(2)}deg) rotateY(${(x * 6).toFixed(2)}deg)`
+    el.style.transform = `perspective(1200px) rotateX(${(-y * 5).toFixed(2)}deg) rotateY(${(x * 5).toFixed(2)}deg) translateY(-4px)`
   }
 
   const onLeave = () => {
@@ -227,12 +189,7 @@ function Tilt({ className, children }: PropsWithChildren<{ className?: string }>
   }
 
   return (
-    <div
-      ref={ref}
-      onPointerMove={onMove}
-      onPointerLeave={onLeave}
-      className={`transition-transform duration-300 ease-out ${className ?? ''}`}
-    >
+    <div ref={ref} onPointerMove={onMove} onPointerLeave={onLeave} className="transition-transform duration-300 ease-out">
       {children}
     </div>
   )

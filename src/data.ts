@@ -1,6 +1,5 @@
 import soldraShot from './assets/projects/soldra-dashboard.webp'
 import soldraShotSmall from './assets/projects/soldra-dashboard-800.webp'
-import soldraMark from './assets/projects/soldra-mark.svg'
 import trackrShot from './assets/projects/trackr.webp'
 import trackrShotSmall from './assets/projects/trackr-800.webp'
 import storeAdminShot from './assets/projects/store-admin.webp'
@@ -65,46 +64,31 @@ export const impact = [
   },
 ]
 
-export const soldra = {
-  name: 'Soldra',
-  tagline: 'Profit and tax tracking for online resellers.',
-  status: 'In development',
-  note: 'Private repo, happy to walk through the code.',
-  problem:
-    'Resellers know what they sold, not what they kept. Payouts look like income until the fees, shipping and cost of the item come off, and the self-employment tax bill shows up in April.',
-  solution:
-    "Soldra imports sales from six marketplaces, takes off every fee and what you paid for the item, and shows the profit that's actually yours, plus what to set aside each tax quarter.",
-  screenshot: soldraShot,
-  screenshotSmall: soldraShotSmall,
-  logo: soldraMark,
-  details: [
-    {
-      title: 'One importer, six CSV formats',
-      body: "eBay, Poshmark, Mercari, Whatnot, Depop and Etsy all export differently. Rows that can't be parsed get skipped instead of failing the file, and overlapping exports never double count.",
-    },
-    {
-      title: 'Fees modeled per platform',
-      body: "eBay's final value fee plus the per-order charge, Poshmark's 20% (or $2.95 under $15), Mercari's 10%. When an export reports the real fee, that number wins.",
-    },
-    {
-      title: 'Tax math you can act on',
-      body: 'Self-employment tax is 15.3% of 92.35% of net profit, split across the real IRS quarterly deadlines.',
-    },
-    {
-      title: 'Tested where it counts',
-      body: 'Every marketplace parser, the fee math and the tax math have their own test suites.',
-    },
-  ],
-  stack: ['Next.js', 'TypeScript', 'Supabase', 'Postgres', 'Drizzle', 'Stripe', 'Tailwind CSS', 'Vitest'],
+export type Project = {
+  name: string
+  description: string
+  screenshot: string
+  screenshotSmall: string
+  height: number
+  alt: string
+  stack: string[]
+  status?: string
+  live?: string
+  liveLabel?: string
+  note?: string
+  source?: string
+  sourceLabel?: string
 }
 
-export const projects = [
+export const projects: Project[] = [
   {
     name: 'Trackr',
     description:
       'An automatic job-application tracker. It records each application and keeps its status up to date, with a full timeline and one-click undo.',
     screenshot: trackrShot,
     screenshotSmall: trackrShotSmall,
+    height: 911,
+    alt: 'Trackr overview: application, interview, response-rate and offer stats above a board of job applications grouped by stage.',
     stack: ['Next.js 16', 'React 19', 'TypeScript', 'Tailwind CSS', 'Postgres (Supabase)', 'Drizzle', 'Vitest'],
     live: 'https://trackr-coral-gamma.vercel.app/demo',
     liveLabel: 'Live demo',
@@ -118,9 +102,23 @@ export const projects = [
       'An admin dashboard for an online store: product management backed by Firestore, sign-in-gated editing, an orders table, and sales charts.',
     screenshot: storeAdminShot,
     screenshotSmall: storeAdminShotSmall,
+    height: 756,
+    alt: 'E-Commerce Admin Dashboard overview: sales, users, products and conversion rate cards above a sales line chart and a category pie chart.',
     stack: ['React', 'Vite', 'Tailwind CSS', 'Firebase', 'Recharts', 'Framer Motion'],
     live: 'https://store-admin-dashboard-eight.vercel.app',
     source: 'https://github.com/TanhimMalik/Store-Admin-Dashboard',
+  },
+  {
+    name: 'Soldra',
+    description:
+      'Profit and tax tracking for online resellers. It imports sales from six marketplaces, takes off every fee and item cost, and shows what to set aside each tax quarter.',
+    screenshot: soldraShot,
+    screenshotSmall: soldraShotSmall,
+    height: 938,
+    alt: "Soldra's dashboard: profit kept this year, total sold, the next quarterly tax date, and a sold-versus-kept chart for the last six months.",
+    stack: ['Next.js', 'TypeScript', 'Supabase', 'Postgres', 'Drizzle', 'Stripe', 'Vitest'],
+    status: 'Work in progress',
+    note: 'Private repo, happy to walk through the code.',
   },
 ]
 
