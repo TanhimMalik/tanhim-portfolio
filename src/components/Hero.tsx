@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { ArrowRight, DownloadSimple, GithubLogo, LinkedinLogo } from '@phosphor-icons/react'
 import { profile } from '../data'
 import { useCursorPull } from '../useCursorPull'
+import { DotGrid } from './DotGrid'
 import { Reveal } from './Reveal'
 import { buttonPrimary, buttonSecondary, container, eyebrow, nudgeDown } from './ui'
 
@@ -12,7 +13,7 @@ export function Hero() {
   return (
     <section id="top" className="relative isolate overflow-clip pt-36 pb-16 sm:pt-44 sm:pb-24">
       <div ref={glowRef} aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle,var(--color-dot)_1px,transparent_1.2px)] [background-size:22px_22px] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_0%,black,transparent)]" />
+        <DotGrid />
         <div data-pull="1" className="absolute -top-32 right-[-8%]">
           <div className="size-[34rem] animate-drift-a rounded-full bg-[#ffb28a] opacity-45 blur-[110px] dark:opacity-15" />
         </div>
