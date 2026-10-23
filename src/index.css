@@ -136,6 +136,13 @@
   filter: none;
 }
 
+/* Theme switch: the new theme grows out of the toggle as a circle (see useTheme). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
 /* Cursor spotlight: a soft wash inside the card and a brighter ring on its border. */
 .spotlight {
   position: relative;
