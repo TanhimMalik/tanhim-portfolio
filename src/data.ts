@@ -1,9 +1,12 @@
 import soldraShot from './assets/projects/soldra-dashboard.webp'
 import soldraShotSmall from './assets/projects/soldra-dashboard-800.webp'
+import soldraClip from './assets/projects/soldra.mp4'
 import trackrShot from './assets/projects/trackr.webp'
 import trackrShotSmall from './assets/projects/trackr-800.webp'
+import trackrClip from './assets/projects/trackr.mp4'
 import storeAdminShot from './assets/projects/store-admin.webp'
 import storeAdminShotSmall from './assets/projects/store-admin-800.webp'
+import storeAdminClip from './assets/projects/store-admin.mp4'
 import typescript from './assets/logos/typescript.svg'
 import javascript from './assets/logos/javascript.svg'
 import java from './assets/logos/java.svg'
@@ -71,6 +74,8 @@ export type Project = {
   screenshotSmall: string
   height: number
   alt: string
+  clip?: string
+  highlights?: { title: string; body: string }[]
   stack: string[]
   status?: string
   live?: string
@@ -84,17 +89,63 @@ export const projects: Project[] = [
   {
     name: 'Trackr',
     description:
-      'An automatic job-application tracker. It records each application and keeps its status up to date, with a full timeline and one-click undo.',
+      'An automatic job-application tracker. It records each application from Gmail and a Chrome extension, keeps its status up to date with a full timeline and one-click undo, and scores how well each job fits your resume.',
     screenshot: trackrShot,
     screenshotSmall: trackrShotSmall,
     height: 911,
-    alt: 'Trackr overview: application, interview, response-rate and offer stats above a board of job applications grouped by stage.',
-    stack: ['Next.js 16', 'React 19', 'TypeScript', 'Tailwind CSS', 'Postgres (Supabase)', 'Drizzle', 'Vitest'],
+    alt: "Trackr's applications board: saved and applied jobs, assessments, interviews and an offer, each card showing how it was found.",
+    clip: trackrClip,
+    stack: ['Next.js 16', 'React 19', 'TypeScript', 'Tailwind CSS', 'Postgres (Supabase)', 'Drizzle', 'Claude API', 'Vitest'],
     live: 'https://trackr-coral-gamma.vercel.app/demo',
     liveLabel: 'Live demo',
     note: 'No sign-up needed',
     source: 'https://github.com/TanhimMalik/trackr',
     sourceLabel: 'Code',
+    highlights: [
+      {
+        title: 'History as an event log',
+        body: "Gmail, the extension and the user all report changes, often out of order. Each one is an append-only event and status is replayed from them, so a late email can't move an application backward, duplicates collapse on a dedupe key, and undo just reverts an event and replays.",
+      },
+      {
+        title: 'Fit scores that show their work',
+        body: "Claude rates a posting against your resume on four parts (skills, seniority, domain, and location/pay) and quotes the posting for each. Code does the arithmetic, so the same ratings always give the same score. A quote that isn't in the posting caps its part, and what the posting doesn't say scores low instead of being guessed.",
+      },
+      {
+        title: 'Rules first, a model only where measured',
+        body: "Deterministic rules classify most recruiting email. A language model sees only what they can't settle, and anything it decides on its own is flagged. On a held-out, hand-labeled inbox it classifies 92% of job email correctly.",
+      },
+      {
+        title: '800+ tests, CI on every push',
+        body: 'Unit tests for the domain logic, integration tests against an in-memory Postgres (with a fake Gmail and a fake model), and Playwright with axe driving the demo. GitHub Actions runs the checks and the build on every push.',
+      },
+    ],
+  },
+  {
+    name: 'Soldra',
+    description:
+      'Profit and tax tracking for online resellers. It imports sales from six marketplaces, takes off every fee and item cost, and shows what to set aside each tax quarter.',
+    screenshot: soldraShot,
+    screenshotSmall: soldraShotSmall,
+    height: 756,
+    alt: "Soldra's dashboard: profit kept this year, total sold, fees paid, number of sales and the next tax payment date, with earnings broken out by platform.",
+    clip: soldraClip,
+    stack: ['Next.js', 'TypeScript', 'Supabase', 'Postgres', 'Drizzle', 'Stripe', 'Vitest'],
+    status: 'Work in progress',
+    note: 'Private repo, happy to walk through the code.',
+    highlights: [
+      {
+        title: 'One importer, six CSV formats',
+        body: 'eBay, Poshmark, Mercari, Whatnot, Depop and Etsy all export differently, and each has its own parser and test suite. A bad row is reported by row number instead of failing the file, and re-importing an overlapping export never double counts.',
+      },
+      {
+        title: 'Fees are data, not code',
+        body: "Each platform's rule is a row in a table: a percentage, a tiered rate like Poshmark's (20%, or $2.95 under $15), plus per-order and processing charges. A fee change is a table update, not a deploy, and when an export reports the actual fee, that number wins over the estimate.",
+      },
+      {
+        title: "Quarterly tax on the IRS's real calendar",
+        body: "Self-employment tax on 92.35% of net profit, plus the income and state rates you enter, split into the IRS's uneven estimated-tax periods: Q2 covers only April and May, and Q4 is paid the following January.",
+      },
+    ],
   },
   {
     name: 'E-Commerce Admin Dashboard',
@@ -104,21 +155,10 @@ export const projects: Project[] = [
     screenshotSmall: storeAdminShotSmall,
     height: 756,
     alt: 'E-Commerce Admin Dashboard overview: sales, users, products and conversion rate cards above a sales line chart and a category pie chart.',
+    clip: storeAdminClip,
     stack: ['React', 'Vite', 'Tailwind CSS', 'Firebase', 'Recharts', 'Framer Motion'],
     live: 'https://store-admin-dashboard-eight.vercel.app',
     source: 'https://github.com/TanhimMalik/Store-Admin-Dashboard',
-  },
-  {
-    name: 'Soldra',
-    description:
-      'Profit and tax tracking for online resellers. It imports sales from six marketplaces, takes off every fee and item cost, and shows what to set aside each tax quarter.',
-    screenshot: soldraShot,
-    screenshotSmall: soldraShotSmall,
-    height: 938,
-    alt: "Soldra's dashboard: profit kept this year, total sold, the next quarterly tax date, and a sold-versus-kept chart for the last six months.",
-    stack: ['Next.js', 'TypeScript', 'Supabase', 'Postgres', 'Drizzle', 'Stripe', 'Vitest'],
-    status: 'Work in progress',
-    note: 'Private repo, happy to walk through the code.',
   },
 ]
 
