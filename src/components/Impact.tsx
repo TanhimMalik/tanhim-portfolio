@@ -5,7 +5,7 @@ import { container, eyebrow } from './ui'
 
 export function Impact() {
   return (
-    <section aria-label="Impact" className="pb-24 sm:pb-32">
+    <section aria-label="Impact" className="pb-20 sm:pb-24">
       <ul className={`${container} spotlight-group grid gap-3 sm:grid-cols-2 lg:grid-cols-4`}>
         {impact.map((item, i) => (
           <li key={item.label}>

@@ -5,11 +5,11 @@ import { chip, container, eyebrow } from './ui'
 
 export function Experience() {
   return (
-    <section id="experience" className="py-24 sm:py-32">
+    <section id="experience" className="py-20 sm:py-24">
       <div className={container}>
         <SectionHeading label="Experience" title="Where I've worked." aside="Real teams, real users." />
 
-        <ol className="mt-14 border-t border-line">
+        <ol className="mt-12 border-t border-line">
           {experience.map((job) => (
             <li key={job.company} className="border-b border-line">
               <Reveal>

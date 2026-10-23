@@ -121,12 +121,12 @@
 
 .reveal {
   opacity: 0;
-  transform: translateY(24px) scale(0.985);
-  filter: blur(6px);
+  transform: translateY(14px);
+  filter: blur(3px);
   transition:
-    opacity 0.8s var(--ease-out-soft),
-    transform 0.8s var(--ease-out-soft),
-    filter 0.8s var(--ease-out-soft);
+    opacity 0.65s var(--ease-out-soft),
+    transform 0.65s var(--ease-out-soft),
+    filter 0.65s var(--ease-out-soft);
   transition-delay: var(--reveal-delay, 0ms);
 }
 

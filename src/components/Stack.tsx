@@ -5,11 +5,11 @@ import { container, eyebrow } from './ui'
 
 export function Stack() {
   return (
-    <section id="stack" className="py-24 sm:py-32">
+    <section id="stack" className="py-20 sm:py-24">
       <div className={container}>
         <SectionHeading label="Stack" title="Tools I reach for." />
 
-        <div className="spotlight-group mt-14 space-y-10">
+        <div className="spotlight-group mt-12 space-y-10">
           {stack.map((group) => (
             <Reveal key={group.group}>
               <h3 className={`${eyebrow} text-muted`}>{group.group}</h3>
