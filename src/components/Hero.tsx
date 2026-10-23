@@ -40,7 +40,7 @@ export function Hero() {
         <h1 className="mt-8 max-w-5xl text-[clamp(2.75rem,7vw,5.75rem)] leading-[0.95] font-bold tracking-[-0.045em]">
           <Words text={`Hi, I'm ${profile.firstName}.`} start={0} />{' '}
           <span className="block text-faint">
-            <Words text="I turn messy workflows into simple tools." start={3} />
+            <Words text="I build web apps and the systems behind them." start={3} />
           </span>
         </h1>
 
