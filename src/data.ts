@@ -14,6 +14,7 @@ import typescript from './assets/logos/typescript.svg'
 import javascript from './assets/logos/javascript.svg'
 import java from './assets/logos/java.svg'
 import python from './assets/logos/python.svg'
+import go from './assets/logos/go.svg'
 import html5 from './assets/logos/html5.svg'
 import css3 from './assets/logos/css3.svg'
 import rLang from './assets/logos/r.svg'
@@ -246,6 +247,7 @@ export const stack: { group: string; items: StackItem[] }[] = [
       { name: 'JavaScript', logo: javascript },
       { name: 'Java', logo: java },
       { name: 'Python', logo: python },
+      { name: 'Go', logo: go },
       { name: 'R', logo: rLang },
       { name: 'SQL', logo: sql },
       { name: 'HTML', logo: html5 },
