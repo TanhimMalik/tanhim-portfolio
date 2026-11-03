@@ -4,6 +4,9 @@ import soldraClip from './assets/projects/soldra.mp4'
 import trackrShot from './assets/projects/trackr.webp'
 import trackrShotSmall from './assets/projects/trackr-800.webp'
 import trackrClip from './assets/projects/trackr.mp4'
+import shipyardShot from './assets/projects/shipyard.webp'
+import shipyardShotSmall from './assets/projects/shipyard-800.webp'
+import shipyardClip from './assets/projects/shipyard.mp4'
 import storeAdminShot from './assets/projects/store-admin.webp'
 import storeAdminShotSmall from './assets/projects/store-admin-800.webp'
 import storeAdminClip from './assets/projects/store-admin.mp4'
@@ -117,6 +120,37 @@ export const projects: Project[] = [
       {
         title: '800+ tests, CI on every push',
         body: 'Unit tests for the domain logic, integration tests against an in-memory Postgres (with a fake Gmail and a fake model), and Playwright with axe driving the demo. GitHub Actions runs the checks and the build on every push.',
+      },
+    ],
+  },
+  {
+    name: 'Shipyard',
+    description:
+      'A single-host deployment platform. Give it a Git repository and it builds the Dockerfile, checks that the new container is ready before sending it traffic, and brings the app back if its container crashes.',
+    screenshot: shipyardShot,
+    screenshotSmall: shipyardShotSmall,
+    height: 960,
+    alt: "Shipyard's project page for a demo app: the active route, a running container, the desired release, and recent deployments marked activated, superseded and failed.",
+    clip: shipyardClip,
+    stack: ['Go', 'Next.js 16', 'TypeScript', 'PostgreSQL', 'Docker', 'BuildKit', 'Traefik'],
+    source: 'https://github.com/TanhimMalik/shipyard',
+    sourceLabel: 'Code',
+    highlights: [
+      {
+        title: 'From Git to a running container',
+        body: 'A Go worker fetches an approved repository and records the exact commit before building its Dockerfile with BuildKit. It starts the resulting image through the Docker SDK, while PostgreSQL tracks each deployment stage and its failure reason.',
+      },
+      {
+        title: 'Check the replacement before switching traffic',
+        body: "A new container starts alongside the current release and must pass HTTP readiness before Traefik switches traffic. The worker verifies that the proxy reaches the intended instance before confirming the deployment. A failed readiness check leaves the previous release's route unchanged.",
+      },
+      {
+        title: 'Recover without rebuilding',
+        body: 'PostgreSQL stores the desired release separately from observed container state. If the active container crashes or disappears, a reconciler starts a replacement from the saved image, checks readiness, and restores routing without fetching or rebuilding the source.',
+      },
+      {
+        title: 'Live events and real container logs',
+        body: 'The Next.js dashboard follows saved deployment events over Server-Sent Events and streams Docker stdout and stderr separately. Events resume by ID after a disconnect; log reconnections load a fresh tail. Deployment failures and recovery activity appear alongside the actual container output.',
       },
     ],
   },
