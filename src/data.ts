@@ -131,7 +131,7 @@ export const projects: Project[] = [
     screenshot: shipyardShot,
     screenshotSmall: shipyardShotSmall,
     height: 960,
-    alt: "Shipyard's project page for a demo app: the active route, a running container, the desired release, and recent deployments marked activated, superseded and failed.",
+    alt: "Shipyard's project page for a todo app: the active route, a running container, the desired release, and recent deployments marked activated and superseded.",
     clip: shipyardClip,
     stack: ['Go', 'Next.js 16', 'TypeScript', 'PostgreSQL', 'Docker', 'BuildKit', 'Traefik'],
     source: 'https://github.com/TanhimMalik/shipyard',
