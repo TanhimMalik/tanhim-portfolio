@@ -1,26 +1,39 @@
 import { useEffect, useId, useRef } from 'react'
 import { orbState } from '../orbState'
 
-// Drawn with the seat at 0,0, in px at the headline's 92px size. SEAT is the flat top of
-// the "e" in "the" at that size; everything is converted to em so it scales with the text.
+// Drawn with the seat at 0,0, in px for a 92px headline; positions are converted to em so
+// it scales with the text it sits on. The default seat is the flat top of the "e" in "the".
 const VB = { x: -24, y: -74, w: 58, h: 92 }
-const SEAT = { x: 101, y: 25 }
 const SCALE = 1.12
-const em = (px: number) => `${(px / 92).toFixed(4)}em`
+const ON_THE_E = { x: 101 / 92, y: 25 / 92 }
+const em = (value: number) => `${value.toFixed(4)}em`
 const HEAD = { x: 1, y: -45 }
 const ARM_REST = -24
 const IDLE_LIGHT = { x: -0.5, y: -0.62 }
 
-// A small astronaut sitting on the headline, watching the hero orb. It follows the orange
-// moon (more closely while the moons are spinning), looks at the cursor when it comes
-// near, jumps when the orb is clicked and waves when hovered.
-export function Astronaut() {
+type Props = {
+  /** Sit on a word (its parent span) or on top of the compact orb's planet. */
+  perch?: 'word' | 'planet'
+  /** Where on the word it sits, in em from the word's top-left. */
+  seat?: { x: number; y: number }
+  /** Watch the hero orb, or look out at the page and the visitor. */
+  watch?: 'orb' | 'viewer'
+  /** Wave the first time it comes into view. */
+  greet?: boolean
+  className?: string
+}
+
+// A small astronaut sitting on a word or on the hero planet. Watching the orb, it follows
+// the orange moon (more closely while the moons are spinning) and jumps when the orb is
+// clicked. It looks at the cursor when it comes near, waves when hovered and jumps when
+// pressed, or when a button near it is.
+export function Astronaut({ perch = 'word', seat = ON_THE_E, watch = 'orb', greet = false, className = '' }: Props) {
   const id = useId().replace(/:/g, '')
   const root = useRef<SVGSVGElement>(null)
 
   useEffect(() => {
     const svg = root.current
-    const area = svg?.closest('section')
+    const area = svg?.closest<HTMLElement>('section, footer')
     if (!svg || !area) return
     const q = (s: string) => svg.querySelector<SVGElement>(s)!
     const body = q('[data-body]')
@@ -46,7 +59,9 @@ export function Astronaut() {
       const unit = r.width / VB.w
       headX = r.left + scrollX + (HEAD.x - VB.x) * unit
       headY = r.top + scrollY + (HEAD.y - VB.y) * unit
-      const orb = area.querySelector('.hero-orb')?.getBoundingClientRect()
+      if (watch !== 'orb') return
+      const orbEl = svg.closest('.hero-orb') ?? [...area.querySelectorAll('.hero-orb')].find((o) => o.getClientRects().length)
+      const orb = orbEl?.getBoundingClientRect()
       if (orb) planet = { x: orb.left + scrollX + orb.width / 2, y: orb.top + scrollY + orb.height / 2, unit: orb.width / 200 }
     }
 
@@ -59,8 +74,11 @@ export function Astronaut() {
     let pokes = orbState.pokes
 
     const aim = () => {
-      if (pointer && Math.hypot(pointer.x - headX, pointer.y - headY) < 280) return pointer
-      const w = 0.3 + 0.7 * Math.min(1, Math.abs(orbState.spin) / 3)
+      if (pointer && (watch === 'viewer' || Math.hypot(pointer.x - headX, pointer.y - headY) < 280)) return pointer
+      // Out at the page: down and to the left, toward the buttons, glancing around a little.
+      if (watch === 'viewer') return { x: headX - 70 + Math.sin(t * 0.45) * 50, y: headY + 150 }
+      // On the planet it watches the moon go round; from the headline mostly the planet.
+      const w = perch === 'planet' ? 1 : 0.3 + 0.7 * Math.min(1, Math.abs(orbState.spin) / 3)
       return {
         x: planet.x + orbState.moonX * planet.unit * w,
         y: planet.y + orbState.moonY * planet.unit * w,
@@ -147,7 +165,7 @@ export function Astronaut() {
       last = now
       t += dt
       if (frames++ % 30 === 0) measure()
-      if (orbState.pokes !== pokes) {
+      if (watch === 'orb' && orbState.pokes !== pokes) {
         pokes = orbState.pokes
         hop = 0
       }
@@ -165,10 +183,12 @@ export function Astronaut() {
       frame = 0
     }
 
+    let greeting = 0
     const observer = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting
       if (visible) run()
       else pause()
+      if (visible && greet && !greeting) greeting = window.setTimeout(onWave, 900)
     })
     observer.observe(svg)
     const onVisibility = () => (document.hidden ? pause() : run())
@@ -187,15 +207,21 @@ export function Astronaut() {
       hop = 0
       onWave()
     }
+    const onClick = (e: MouseEvent) => {
+      if (e.target instanceof Element && e.target.closest('button')) onPoke()
+    }
     if (finePointer) {
       area.addEventListener('pointermove', onMove)
       area.addEventListener('pointerleave', onLeave)
       svg.addEventListener('pointerenter', onWave)
     }
     svg.addEventListener('pointerdown', onPoke)
+    area.addEventListener('click', onClick)
 
     return () => {
       pause()
+      clearTimeout(greeting)
+      area.removeEventListener('click', onClick)
       observer.disconnect()
       document.removeEventListener('visibilitychange', onVisibility)
       area.removeEventListener('pointermove', onMove)
@@ -203,7 +229,7 @@ export function Astronaut() {
       svg.removeEventListener('pointerenter', onWave)
       svg.removeEventListener('pointerdown', onPoke)
     }
-  }, [id])
+  }, [id, perch, watch, greet])
 
   const suit = `url(#${id}-suit)`
   const far = `url(#${id}-far)`
@@ -213,13 +239,13 @@ export function Astronaut() {
     <svg
       ref={root}
       aria-hidden
-      className="astronaut"
+      className={`astronaut ${perch === 'planet' ? 'on-planet' : ''} ${className}`}
       viewBox={`${VB.x} ${VB.y} ${VB.w} ${VB.h}`}
       style={{
-        left: em(SEAT.x + VB.x * SCALE),
-        top: em(SEAT.y + VB.y * SCALE),
-        width: em(VB.w * SCALE),
-        height: em(VB.h * SCALE),
+        // On the planet, CSS puts the seat on top of the sphere.
+        ...(perch === 'word' && { left: em(seat.x + (VB.x * SCALE) / 92), top: em(seat.y + (VB.y * SCALE) / 92) }),
+        width: em((VB.w * SCALE) / 92),
+        height: em((VB.h * SCALE) / 92),
       }}
     >
       <defs>

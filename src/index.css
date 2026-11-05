@@ -196,6 +196,25 @@ html.dark .spotlight::before {
   );
 }
 
+/* An Impact number inside an Experience bullet: when a card links to it, it lands a third
+   of the way down the screen and flashes. */
+.metric {
+  scroll-margin-top: 35vh;
+  box-decoration-break: clone;
+}
+
+.metric:target {
+  animation: metric-flash 1.8s var(--ease-out-soft) 0.45s;
+}
+
+@keyframes metric-flash {
+  0%,
+  35% {
+    background: rgb(255 90 31 / 0.32);
+    box-shadow: 0 0 0 5px rgb(255 90 31 / 0.14);
+  }
+}
+
 /* Hero orb (see HeroOrb). The cursor is the light: --lx/--ly place the highlight and
    --dx/--dy push the shading to the far side. Rings and moons are drawn in two SVG
    layers so the near half of each orbit passes in front of the sphere. */
@@ -245,6 +264,24 @@ html.dark .hero-orb {
 @media (min-width: 64rem) {
   .hero-orb {
     display: grid;
+  }
+}
+
+/* Below lg the orb sits in the page flow beside "Previously at", with the astronaut on top.
+   The negative margins trim the empty corners of its square stage. */
+.hero-orb.is-compact {
+  --orb-size: clamp(12rem, 56vw, 17rem);
+  position: relative;
+  bottom: auto;
+  left: auto;
+  display: grid;
+  flex: none;
+  margin: calc(var(--orb-size) * -0.08) calc(var(--orb-size) * -0.12) calc(var(--orb-size) * -0.16) 0;
+}
+
+@media (min-width: 64rem) {
+  .hero-orb.is-compact {
+    display: none;
   }
 }
 
@@ -416,8 +453,8 @@ html.dark .hero-orb-swirl {
   }
 }
 
-/* The astronaut sitting on the "e" of "the" (see Astronaut). Placed in em so it stays
-   on the letter at any headline size; only shown alongside the orb. */
+/* The astronaut (see Astronaut), sitting on a word in a heading or on the compact planet.
+   It's placed in em so it stays on its letter at any heading size. */
 .astronaut {
   --astro-hi: #ffffff;
   --astro-mid: #f0eae1;
@@ -429,7 +466,6 @@ html.dark .hero-orb-swirl {
   --astro-shadow: rgb(22 20 15 / 0.35);
 
   position: absolute;
-  display: none;
   overflow: visible;
   animation: astro-in 0.9s var(--ease-out-soft) 1.3s both;
 }
@@ -443,10 +479,15 @@ html.dark .astronaut {
   --astro-shadow: rgb(0 0 0 / 0.55);
 }
 
-@media (min-width: 64rem) {
-  .astronaut {
-    display: block;
-  }
+/* Sitting on top of the compact orb's sphere (which starts 23.7% down its stage). The em
+   values are the seat's offset inside the SVG. */
+.astronaut.on-planet {
+  z-index: 1;
+  display: block;
+  font-size: calc(var(--orb-size) * 0.25);
+  left: calc(50% - 0.292em);
+  top: calc(23.7% - 0.87em);
+  pointer-events: auto;
 }
 
 .astronaut .astro-hi { stop-color: var(--astro-hi); }

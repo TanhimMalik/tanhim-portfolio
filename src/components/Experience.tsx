@@ -3,6 +3,20 @@ import { Reveal } from './Reveal'
 import { SectionHeading } from './SectionHeading'
 import { chip, container, eyebrow } from './ui'
 
+// The percentages in the bullets are the numbers on the Impact cards. Each is marked and
+// gets an anchor, so a card can link to the bullet it comes from.
+function withMetrics(text: string) {
+  return text.split(/(\d+%)/).map((part, i) =>
+    /^\d+%$/.test(part) ? (
+      <span key={i} id={`metric-${parseInt(part, 10)}`} className="metric rounded-md bg-accent/10 px-0.5 font-semibold text-accent-ink">
+        {part}
+      </span>
+    ) : (
+      part
+    ),
+  )
+}
+
 export function Experience() {
   return (
     <section id="experience" className="py-20 sm:py-24">
@@ -25,7 +39,7 @@ export function Experience() {
                       {job.points.map((point) => (
                         <li key={point} className="flex gap-4 text-[17px] leading-relaxed text-ink-soft">
                           <span aria-hidden className="mt-[0.7em] size-1.5 shrink-0 rounded-full bg-accent" />
-                          {point}
+                          <span>{withMetrics(point)}</span>
                         </li>
                       ))}
                     </ul>

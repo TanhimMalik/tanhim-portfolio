@@ -41,7 +41,7 @@ export function Hero() {
           <Words text={`Hi, I'm ${profile.firstName}.`} start={0} />{' '}
           <span className="block text-faint">
             <Words text="I build web apps and the systems behind them." start={3} perch={5}>
-              <Astronaut />
+              <Astronaut className="hidden lg:block" />
             </Words>
           </span>
         </h1>
@@ -70,10 +70,15 @@ export function Hero() {
         </Reveal>
 
         <Reveal delay={320}>
-          <div className="mt-16 flex flex-wrap items-center gap-x-8 gap-y-3">
-            <span className={`${eyebrow} text-muted`}>Previously at</span>
-            <span className="font-display text-2xl font-bold tracking-tight text-ink-soft">Tripadvisor</span>
-            <span className="font-display text-2xl font-bold tracking-tight text-ink-soft">Jefferies</span>
+          <div className="mt-16 flex items-center justify-between gap-4">
+            <div className="flex flex-col items-start gap-2 md:flex-row md:flex-wrap md:items-center md:gap-x-8 md:gap-y-3">
+              <span className={`${eyebrow} text-muted`}>Previously at</span>
+              <span className="font-display text-2xl font-bold tracking-tight text-ink-soft">Tripadvisor</span>
+              <span className="font-display text-2xl font-bold tracking-tight text-ink-soft">Jefferies</span>
+            </div>
+            <HeroOrb compact>
+              <Astronaut perch="planet" />
+            </HeroOrb>
           </div>
         </Reveal>
       </div>

@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import { ArrowUp, Check, Copy, DownloadSimple, EnvelopeSimple, GithubLogo, LinkedinLogo } from '@phosphor-icons/react'
 import { profile } from '../data'
 import { useCursorPull } from '../useCursorPull'
+import { Astronaut } from './Astronaut'
 import { Reveal } from './Reveal'
 import { buttonPrimary, buttonSecondary, container, eyebrow, nudgeDown, nudgeUp, textLink, underline } from './ui'
 
@@ -39,7 +40,12 @@ export function Contact() {
 
             <p className={`${eyebrow} text-accent-ink`}>Contact</p>
             <h2 className="mt-4 max-w-3xl text-[clamp(2.5rem,6vw,4.75rem)] leading-[0.95] font-bold tracking-[-0.045em]">
-              Let's talk. <span className="block text-faint">Whether it's a role, a project or a question.</span>
+              Let's{' '}
+              <span className="relative inline-block">
+                talk.
+                <Astronaut seat={{ x: 0.934, y: 0.132 }} watch="viewer" greet />
+              </span>{' '}
+              <span className="block text-faint">Whether it's a role, a project or a question.</span>
             </h2>
 
             <div className="mt-10 flex flex-wrap items-center gap-3">

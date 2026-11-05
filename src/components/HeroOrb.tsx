@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, type PropsWithChildren } from 'react'
 import { orbState } from '../orbState'
 
 // Everything is laid out in a 200x200 box centred on 0,0, so the SVG scales with the stage.
@@ -29,7 +29,8 @@ function project(radius: number, { elevation, roll }: Orbit, a: number) {
 
 // The hero's orb. The cursor acts as the light, the rings lean toward it, dragging
 // spins the moons, and a click sends out a ripple. Motion-sensitive visitors get a still orb.
-export function HeroOrb() {
+// The compact one sits in the page flow for screens too narrow for the full-size orb.
+export function HeroOrb({ compact = false, children }: PropsWithChildren<{ compact?: boolean }>) {
   const root = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -60,6 +61,7 @@ export function HeroOrb() {
     let squashVel = 0
     let swirlAngle = 0
     let t = 0
+    let visible = false
 
     const draw = () => {
       const orbits = RINGS.map((ring) => ({
@@ -133,7 +135,6 @@ export function HeroOrb() {
 
     let frame = 0
     let last = 0
-    let visible = false
     const tick = (now: number) => {
       const dt = Math.min(0.05, last ? (now - last) / 1000 : 0.016)
       last = now
@@ -186,7 +187,7 @@ export function HeroOrb() {
     }
 
     const onMove = (e: PointerEvent) => {
-      if (e.pointerType !== 'mouse') return
+      if (e.pointerType !== 'mouse' || !visible) return
       const c = centre()
       const dx = e.clientX - c.x
       const dy = e.clientY - c.y
@@ -260,7 +261,7 @@ export function HeroOrb() {
   }, [])
 
   return (
-    <div ref={root} aria-hidden className="hero-orb">
+    <div ref={root} aria-hidden className={compact ? 'hero-orb is-compact' : 'hero-orb'}>
       <svg className="hero-orb-layer" viewBox="-100 -100 200 200">
         <path data-ring="back" className="hero-orb-ring is-back" />
         <path data-dots="back" className="hero-orb-dots is-back" />
@@ -281,6 +282,7 @@ export function HeroOrb() {
           <circle key={i} data-moon={`${i}f`} className={`hero-orb-moon m${i}`} />
         ))}
       </svg>
+      {children}
     </div>
   )
 }
