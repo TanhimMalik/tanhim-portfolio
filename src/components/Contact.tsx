@@ -43,7 +43,7 @@ export function Contact() {
               Let's{' '}
               <span className="relative inline-block">
                 talk.
-                <Astronaut seat={{ x: 0.934, y: 0.132 }} watch="viewer" greet />
+                <Astronaut seat={{ x: 0.934, y: 0.132 }} watch="viewer" journey="arrives" greet />
               </span>{' '}
               <span className="block text-faint">Whether it's a role, a project or a question.</span>
             </h2>
