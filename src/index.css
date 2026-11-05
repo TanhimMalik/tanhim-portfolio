@@ -196,9 +196,233 @@ html.dark .spotlight::before {
   );
 }
 
+/* Hero orb (see HeroOrb). The cursor is the light: --lx/--ly place the highlight and
+   --dx/--dy push the shading to the far side. Rings and moons are drawn in two SVG
+   layers so the near half of each orbit passes in front of the sphere. */
+.hero-orb {
+  --orb-size: clamp(22rem, 36vw, 36rem);
+  --orb-hi: #fff7ee;
+  --orb-base-a: #ffe0c8;
+  --orb-base-b: #f8b48e;
+  --orb-base-c: #e5845f;
+  --orb-warm: #ff7a45;
+  --orb-cool: #a9bde6;
+  --orb-shade: rgb(140 46 8 / 0.24);
+  --orb-glow: 0 44px 70px -34px rgb(255 90 31 / 0.5);
+  --orb-ring: rgb(22 20 15 / 0.2);
+  --orb-ring-back: rgb(22 20 15 / 0.1);
+  --orb-moon: var(--color-accent);
+  --orb-moon-2: #8a8377;
+  --orb-moon-3: #7d97cf;
+
+  /* Centred a little in from the content's right edge, level with the copy under the headline. */
+  position: absolute;
+  bottom: 13rem;
+  left: calc(50% + min(50%, 36rem) - 2rem - var(--orb-size) * 0.29);
+  display: none;
+  width: var(--orb-size);
+  aspect-ratio: 1;
+  margin: 0 0 calc(var(--orb-size) / -2) calc(var(--orb-size) / -2);
+  pointer-events: none;
+  animation: orb-in 1.4s var(--ease-out-soft) 0.35s both;
+}
+
+html.dark .hero-orb {
+  --orb-hi: #ffd9bd;
+  --orb-base-a: #ff9f72;
+  --orb-base-b: #c94a17;
+  --orb-base-c: #4f2414;
+  --orb-warm: #ff6a2b;
+  --orb-cool: #45598a;
+  --orb-shade: rgb(10 6 4 / 0.55);
+  --orb-glow: 0 0 90px -10px rgb(255 90 31 / 0.35);
+  --orb-ring: rgb(243 240 234 / 0.22);
+  --orb-ring-back: rgb(243 240 234 / 0.1);
+  --orb-moon-2: #d7d2c8;
+  --orb-moon-3: #8ea6dc;
+}
+
+@media (min-width: 64rem) {
+  .hero-orb {
+    display: grid;
+  }
+}
+
+.hero-orb > * {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-orb-layer {
+  position: relative;
+  overflow: visible;
+}
+
+.hero-orb-ring {
+  fill: none;
+  stroke: var(--orb-ring);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.hero-orb-ring.is-back {
+  stroke: var(--orb-ring-back);
+}
+
+.hero-orb-dots {
+  fill: var(--orb-ring);
+}
+
+.hero-orb-dots.is-back {
+  fill: var(--orb-ring-back);
+}
+
+.hero-orb-moon {
+  fill: var(--orb-moon);
+}
+
+.hero-orb-moon.m0 {
+  filter: drop-shadow(0 0 3px rgb(255 90 31 / 0.55));
+}
+
+.hero-orb-moon.m1 {
+  fill: var(--orb-moon-2);
+}
+
+.hero-orb-moon.m2 {
+  fill: var(--orb-moon-3);
+}
+
+.hero-orb-moon.is-back {
+  fill-opacity: 0.45;
+}
+
+.hero-orb-body {
+  position: relative;
+  will-change: transform;
+}
+
+.hero-orb-sphere {
+  --lx: 35%;
+  --ly: 31%;
+  --dx: -0.5;
+  --dy: -0.62;
+  --sx: 65%;
+  --sy: 69%;
+  --sa: 100%;
+
+  position: absolute;
+  inset: 23.7%;
+  overflow: hidden;
+  border-radius: 50%;
+  background: linear-gradient(140deg, var(--orb-base-a) 8%, var(--orb-base-b) 55%, var(--orb-base-c) 100%);
+  box-shadow: var(--orb-glow);
+  pointer-events: auto;
+  cursor: grab;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+  transition: scale 0.5s var(--ease-out-soft);
+}
+
+.hero-orb-sphere:hover {
+  scale: 1.025;
+}
+
+.hero-orb[data-dragging] .hero-orb-sphere {
+  cursor: grabbing;
+  scale: 0.985;
+}
+
+/* Two soft colour pools that slowly turn inside the sphere. */
+.hero-orb-swirl {
+  position: absolute;
+  inset: -25%;
+  background:
+    radial-gradient(34% 34% at 30% 66%, var(--orb-cool), transparent),
+    radial-gradient(38% 38% at 72% 40%, var(--orb-warm), transparent),
+    radial-gradient(26% 26% at 56% 84%, var(--orb-base-a), transparent);
+  opacity: 0.5;
+  filter: blur(26px);
+}
+
+html.dark .hero-orb-swirl {
+  opacity: 0.75;
+}
+
+/* The light: a highlight where the cursor is, shading toward the far side. */
+.hero-orb-shine {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      circle at var(--lx) var(--ly),
+      var(--orb-hi) 0%,
+      color-mix(in srgb, var(--orb-hi) 60%, transparent) 12%,
+      color-mix(in srgb, var(--orb-hi) 22%, transparent) 28%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at var(--sx) var(--sy),
+      color-mix(in srgb, var(--orb-shade) var(--sa), transparent) 0%,
+      transparent 62%
+    );
+  box-shadow:
+    inset calc(var(--dx) * -14px) calc(var(--dy) * -14px) 30px var(--orb-shade),
+    inset calc(var(--dx) * 8px) calc(var(--dy) * 8px) 22px rgb(255 248 238 / 0.35);
+}
+
+.hero-orb-sphere::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  opacity: 0.16;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' opacity='.4' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+.hero-orb-ripple {
+  position: absolute;
+  inset: 23.7%;
+  border: 1.5px solid var(--color-accent);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: orb-ripple 1.1s var(--ease-out-soft) forwards;
+}
+
+@keyframes orb-ripple {
+  from {
+    opacity: 0.7;
+    scale: 1;
+  }
+  to {
+    opacity: 0;
+    scale: 1.85;
+  }
+}
+
+@keyframes orb-in {
+  from {
+    opacity: 0;
+    scale: 0.9;
+    filter: blur(12px);
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+    filter: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .hero-orb-sphere {
+    cursor: default;
   }
 
   .reveal {
