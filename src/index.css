@@ -416,6 +416,84 @@ html.dark .hero-orb-swirl {
   }
 }
 
+/* The astronaut sitting on the "e" of "the" (see Astronaut). Placed in em so it stays
+   on the letter at any headline size; only shown alongside the orb. */
+.astronaut {
+  --astro-hi: #ffffff;
+  --astro-mid: #f0eae1;
+  --astro-lo: #c9bdac;
+  --astro-boot-hi: #6b655a;
+  --astro-boot-lo: #2f2c26;
+  --astro-visor-hi: #4a5470;
+  --astro-visor-lo: #101115;
+  --astro-shadow: rgb(22 20 15 / 0.35);
+
+  position: absolute;
+  display: none;
+  overflow: visible;
+  animation: astro-in 0.9s var(--ease-out-soft) 1.3s both;
+}
+
+html.dark .astronaut {
+  --astro-hi: #f6f2ec;
+  --astro-mid: #ddd6cb;
+  --astro-lo: #8d8374;
+  --astro-boot-hi: #57524a;
+  --astro-boot-lo: #1c1a17;
+  --astro-shadow: rgb(0 0 0 / 0.55);
+}
+
+@media (min-width: 64rem) {
+  .astronaut {
+    display: block;
+  }
+}
+
+.astronaut .astro-hi { stop-color: var(--astro-hi); }
+.astronaut .astro-mid { stop-color: var(--astro-mid); }
+.astronaut .astro-lo { stop-color: var(--astro-lo); }
+.astronaut .astro-boot-hi { stop-color: var(--astro-boot-hi); }
+.astronaut .astro-boot-lo { stop-color: var(--astro-boot-lo); }
+.astronaut .astro-visor-hi { stop-color: var(--astro-visor-hi); }
+.astronaut .astro-visor-lo { stop-color: var(--astro-visor-lo); }
+.astronaut .astro-shadow { fill: var(--astro-shadow); }
+.astronaut .astro-panel { fill: var(--astro-lo); opacity: 0.55; }
+.astronaut .astro-ring,
+.astronaut .astro-bezel,
+.astronaut .astro-ear { fill: var(--astro-lo); }
+.astronaut .astro-cuff,
+.astronaut .astro-tip { fill: var(--color-accent); }
+.astronaut .astro-wire { stroke: var(--astro-lo); stroke-width: 1.3; stroke-linecap: round; }
+.astronaut .astro-reflection { fill: #ff7a45; opacity: 0.85; }
+.astronaut .astro-visor-glint { fill: #fff; opacity: 0.7; }
+.astronaut .astro-glint { fill: #fff; opacity: 0.85; }
+
+.astronaut .astro-light {
+  fill: var(--color-accent);
+  animation: astro-blink 2.4s steps(1) infinite;
+}
+
+@keyframes astro-blink {
+  0%,
+  70% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 0.25;
+  }
+}
+
+@keyframes astro-in {
+  from {
+    opacity: 0;
+    translate: 0 -0.35em;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

@@ -1,7 +1,8 @@
-import { useRef } from 'react'
+import { useRef, type PropsWithChildren } from 'react'
 import { ArrowRight, DownloadSimple, GithubLogo, LinkedinLogo } from '@phosphor-icons/react'
 import { profile } from '../data'
 import { useCursorPull } from '../useCursorPull'
+import { Astronaut } from './Astronaut'
 import { HeroOrb } from './HeroOrb'
 import { Reveal } from './Reveal'
 import { buttonPrimary, buttonSecondary, container, eyebrow, nudgeDown } from './ui'
@@ -39,7 +40,9 @@ export function Hero() {
         <h1 className="mt-8 max-w-5xl text-[clamp(2.75rem,7vw,5.75rem)] leading-[0.95] font-bold tracking-[-0.045em]">
           <Words text={`Hi, I'm ${profile.firstName}.`} start={0} />{' '}
           <span className="block text-faint">
-            <Words text="I build web apps and the systems behind them." start={3} />
+            <Words text="I build web apps and the systems behind them." start={3} perch={5}>
+              <Astronaut />
+            </Words>
           </span>
         </h1>
 
@@ -80,12 +83,17 @@ export function Hero() {
   )
 }
 
-function Words({ text, start }: { text: string; start: number }) {
+// Splits a line into words that rise in one after another. `children` sit on the word at `perch`.
+function Words({ text, start, perch, children }: PropsWithChildren<{ text: string; start: number; perch?: number }>) {
   return text.split(' ').map((word, i) => (
     <span key={i}>
       {i > 0 && ' '}
-      <span className="inline-block animate-rise" style={{ animationDelay: `${80 + (start + i) * 55}ms` }}>
+      <span
+        className={`inline-block animate-rise ${i === perch ? 'relative' : ''}`}
+        style={{ animationDelay: `${80 + (start + i) * 55}ms` }}
+      >
         {word}
+        {i === perch && children}
       </span>
     </span>
   ))

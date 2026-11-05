@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { orbState } from '../orbState'
 
 // Everything is laid out in a 200x200 box centred on 0,0, so the SVG scales with the stage.
 const SPHERE = 52.6
@@ -102,6 +103,10 @@ export function HeroOrb() {
         }
         b.style.opacity = z < 0 ? '1' : '0'
         f.style.opacity = z < 0 ? '0' : '1'
+        if (i === 0) {
+          orbState.moonX = x
+          orbState.moonY = y
+        }
       })
 
       const breathe = still ? 0 : Math.sin(t * 0.9) * 0.012
@@ -144,6 +149,7 @@ export function HeroOrb() {
       lean.y += (leanTarget.y - lean.y) * follow
 
       spin *= Math.exp(-dt * 1.4)
+      orbState.spin = spin
       phase += dt * (0.4 + spin)
       swirlAngle += dt * (6 + spin * 40)
 
@@ -220,6 +226,7 @@ export function HeroOrb() {
       dragX = null
       delete el.dataset.dragging
       if (travel < 6) {
+        orbState.pokes++
         squashVel += 2.4
         spin = Math.min(9, spin + 4)
         const ring = document.createElement('span')
